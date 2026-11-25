@@ -19,17 +19,28 @@ export default function ScreenshotsSection({ content }: ScreenshotsSectionProps)
         subtitle={content.subtitle}
         id="screenshots-title"
       />
-      <div className="flex aspect-video items-center justify-center rounded-lg border border-dashed border-graphite-border bg-graphite-card">
-        <div className="text-center">
-          <ImageOff className="mx-auto h-10 w-10 text-content-secondary" aria-hidden="true" />
-          <p className="mt-3 text-sm font-medium text-content-secondary">
-            {content.placeholderLabel}
-          </p>
-          <p className="mt-1 text-xs text-content-secondary">
-            {content.placeholderNote}
-          </p>
-        </div>
-      </div>
+      <ul className="grid gap-4 sm:grid-cols-2">
+        {[0, 1, 2, 3].map((i) => (
+          <li
+            key={i}
+            className="flex aspect-video items-center justify-center rounded-lg border border-dashed border-graphite-border bg-graphite-card"
+            aria-label={content.placeholderLabel}
+          >
+            <div className="text-center">
+              <ImageOff
+                className="mx-auto h-8 w-8 text-content-secondary"
+                aria-hidden="true"
+              />
+              <p className="mt-2 text-sm font-medium text-content-secondary">
+                {content.placeholderLabel}
+              </p>
+              <p className="mt-1 text-xs text-content-secondary">
+                {content.placeholderNote}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }

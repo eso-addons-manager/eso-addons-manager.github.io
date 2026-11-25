@@ -7,8 +7,8 @@ type NoticeSectionProps = {
 
 export default function NoticeSection({ content }: NoticeSectionProps) {
   return (
-    <section id="notice" className="border-b border-graphite-border bg-graphite-section scroll-mt-20">
-      <div className="container-page py-10 sm:py-12">
+    <section id="notice" className="scroll-mt-14 border-b border-graphite-border bg-graphite-section">
+      <div className="container-page py-6 sm:py-8">
         <WarningNotice content={content} />
       </div>
     </section>

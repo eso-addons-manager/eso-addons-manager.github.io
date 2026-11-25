@@ -19,6 +19,7 @@ const NAV_ITEMS: { id: string; key: keyof LocaleContent['nav'] }[] = [
 
 export default function Navigation({ content }: NavigationProps) {
   const [open, setOpen] = useState(false);
+  const [activeId, setActiveId] = useState<string>('');
 
   // Close the mobile menu when the viewport grows to desktop width.
   useEffect(() => {
@@ -29,6 +30,29 @@ export default function Navigation({ content }: NavigationProps) {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // Track which section is currently in view to highlight the active link.
+  useEffect(() => {
+    const sections = NAV_ITEMS.map((item) =>
+      document.getElementById(item.id),
+    ).filter((el): el is HTMLElement => el !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   const handleNavClick = () => setOpen(false);
 
   return (
@@ -36,7 +60,7 @@ export default function Navigation({ content }: NavigationProps) {
       {/* Mobile toggle */}
       <button
         type="button"
-        className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-content-primary hover:text-bronze"
+        className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-content-primary transition-colors hover:text-bronze"
         aria-expanded={open}
         aria-controls="mobile-menu"
         aria-label={open ? content.header.closeMenu : content.header.openMenu}
@@ -46,17 +70,25 @@ export default function Navigation({ content }: NavigationProps) {
       </button>
 
       {/* Desktop navigation */}
-      <ul className="hidden md:flex md:items-center md:gap-1">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.id}>
-            <a
-              href={`#${item.id}`}
-              className="block rounded-md px-3 py-2 text-sm font-medium text-content-secondary transition-colors hover:text-bronze"
-            >
-              {content.nav[item.key]}
-            </a>
-          </li>
-        ))}
+      <ul className="hidden md:flex md:items-center md:gap-0.5">
+        {NAV_ITEMS.map((item) => {
+          const isActive = activeId === item.id;
+          return (
+            <li key={item.id}>
+              <a
+                href={`#${item.id}`}
+                className={`block rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                  isActive
+                    ? 'text-bronze'
+                    : 'text-content-secondary hover:text-bronze'
+                }`}
+                aria-current={isActive ? 'true' : undefined}
+              >
+                {content.nav[item.key]}
+              </a>
+            </li>
+          );
+        })}
       </ul>
 
       {/* Mobile menu */}
@@ -65,18 +97,26 @@ export default function Navigation({ content }: NavigationProps) {
           id="mobile-menu"
           className="absolute left-0 right-0 top-full z-50 border-b border-graphite-border bg-graphite-section shadow-lg md:hidden"
         >
-          <ul className="container-page flex flex-col py-4">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  onClick={handleNavClick}
-                  className="block rounded-md px-3 py-3 text-base font-medium text-content-secondary hover:text-bronze"
-                >
-                  {content.nav[item.key]}
-                </a>
-              </li>
-            ))}
+          <ul className="container-page flex flex-col py-3">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeId === item.id;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={handleNavClick}
+                    className={`block rounded-md px-3 py-3 text-base font-medium transition-colors ${
+                      isActive
+                        ? 'text-bronze'
+                        : 'text-content-secondary hover:text-bronze'
+                    }`}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    {content.nav[item.key]}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

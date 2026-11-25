@@ -29,20 +29,27 @@
     @apply bg-graphite-bg text-content-primary font-sans antialiased;
     line-height: 1.5;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
   h3,
   h4 {
-    line-height: 1.2;
+    line-height: 1.15;
     font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   /* Visible keyboard focus indicators for all interactive elements. */
   a:focus-visible,
   button:focus-visible {
     @apply outline-none ring-2 ring-bronze ring-offset-2 ring-offset-graphite-bg rounded;
+  }
+
+  ::selection {
+    @apply bg-bronze/30 text-content-primary;
   }
 }
 
@@ -52,23 +59,27 @@
   }
 
   .section-padding {
-    @apply py-16 sm:py-20 lg:py-24;
+    @apply py-14 sm:py-16 lg:py-20;
   }
 
   .card {
     @apply rounded-lg border border-graphite-border bg-graphite-card p-6;
   }
 
+  .card-hover {
+    @apply transition-colors duration-200 hover:border-bronze/50;
+  }
+
   .eyebrow {
-    @apply text-sm font-medium uppercase tracking-wider text-bronze;
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-bronze;
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors duration-200 focus-visible:outline-none;
   }
 
   .btn-primary {
-    @apply bg-bronze text-graphite-bg hover:bg-bronze-hover;
+    @apply bg-bronze text-graphite-bg hover:bg-bronze-hover active:bg-bronze-muted;
   }
 
   .btn-secondary {
@@ -77,5 +88,15 @@
 
   .link-bronze {
     @apply text-bronze underline-offset-4 hover:underline;
+  }
+
+  /* Subtle original cartographic background for the hero section.
+     Abstract topographic contour lines rendered as inline SVG via a data URI.
+     Low opacity, decorative, non-interactive, behind content. */
+  .hero-cartographic {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800' fill='none'%3E%3Cg stroke='%23C5A36B' stroke-width='1' fill='none' opacity='0.5'%3E%3Cpath d='M0 200 C200 140 400 260 600 200 S1000 140 1200 200'/%3E%3Cpath d='M0 240 C200 180 400 300 600 240 S1000 180 1200 240'/%3E%3Cpath d='M0 280 C200 220 400 340 600 280 S1000 220 1200 280'/%3E%3Cpath d='M0 520 C200 460 400 580 600 520 S1000 460 1200 520'/%3E%3Cpath d='M0 560 C200 500 400 620 600 560 S1000 500 1200 560'/%3E%3Cpath d='M0 600 C200 540 400 660 600 600 S1000 540 1200 600'/%3E%3C/g%3E%3Cg stroke='%23C5A36B' stroke-width='0.75' fill='none' opacity='0.35'%3E%3Ccircle cx='950' cy='400' r='90'/%3E%3Ccircle cx='950' cy='400' r='130'/%3E%3Ccircle cx='950' cy='400' r='170'/%3E%3Ccircle cx='250' cy='350' r='60'/%3E%3Ccircle cx='250' cy='350' r='95'/%3E%3C/g%3E%3Cg fill='%23C5A36B' opacity='0.35'%3E%3Cpath d='M950 372 L958 396 L950 400 L942 396 Z'/%3E%3Cpath d='M978 400 L954 408 L950 400 L954 392 Z' opacity='0.7'/%3E%3Cpath d='M950 428 L942 404 L950 400 L958 404 Z' opacity='0.7'/%3E%3Cpath d='M922 400 L946 392 L950 400 L946 408 Z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 }

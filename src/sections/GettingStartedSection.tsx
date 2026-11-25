@@ -1,3 +1,4 @@
+import { Download, ShieldCheck, FolderSearch, ScanLine } from 'lucide-react';
 import Section from '../components/Section';
 import SectionHeading from '../components/SectionHeading';
 import type { LocaleContent } from '../i18n/types';
@@ -10,10 +11,30 @@ export default function GettingStartedSection({
   content,
 }: GettingStartedSectionProps) {
   const steps = [
-    { title: content.step1Title, body: content.step1Body },
-    { title: content.step2Title, body: content.step2Body },
-    { title: content.step3Title, body: content.step3Body },
-    { title: content.step4Title, body: content.step4Body },
+    {
+      title: content.step1Title,
+      body: content.step1Body,
+      icon: Download,
+      emphasis: false,
+    },
+    {
+      title: content.step2Title,
+      body: content.step2Body,
+      icon: ShieldCheck,
+      emphasis: true,
+    },
+    {
+      title: content.step3Title,
+      body: content.step3Body,
+      icon: FolderSearch,
+      emphasis: false,
+    },
+    {
+      title: content.step4Title,
+      body: content.step4Body,
+      icon: ScanLine,
+      emphasis: true,
+    },
   ];
 
   return (
@@ -27,23 +48,41 @@ export default function GettingStartedSection({
         subtitle={content.subtitle}
         id="getting-started-title"
       />
-      <ol className="grid gap-5 sm:grid-cols-2">
-        {steps.map((step, index) => (
-          <li key={step.title} className="card">
-            <div className="flex items-center gap-3">
-              <span
-                className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-bronze text-sm font-semibold text-graphite-bg"
-                aria-hidden="true"
-              >
-                {index + 1}
-              </span>
-              <h3 className="text-base font-semibold text-content-primary">
-                {step.title}
-              </h3>
-            </div>
-            <p className="mt-3 text-sm text-content-secondary">{step.body}</p>
-          </li>
-        ))}
+      <ol className="grid gap-4 sm:grid-cols-2">
+        {steps.map((step, index) => {
+          const Icon = step.icon;
+          return (
+            <li
+              key={step.title}
+              className={`card flex h-full flex-col ${
+                step.emphasis
+                  ? 'border-bronze/30 bg-bronze/[0.04]'
+                  : ''
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-bronze text-sm font-semibold text-graphite-bg"
+                  aria-hidden="true"
+                >
+                  {index + 1}
+                </span>
+                <h3 className="text-base font-semibold text-content-primary">
+                  {step.title}
+                </h3>
+                <Icon
+                  className={`ml-auto h-5 w-5 shrink-0 ${
+                    step.emphasis ? 'text-bronze' : 'text-content-secondary'
+                  }`}
+                  aria-hidden="true"
+                />
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-content-secondary">
+                {step.body}
+              </p>
+            </li>
+          );
+        })}
       </ol>
     </Section>
   );

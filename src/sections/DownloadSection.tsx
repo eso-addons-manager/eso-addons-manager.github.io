@@ -1,4 +1,4 @@
-import { ExternalLink, Info } from 'lucide-react';
+import { ExternalLink, Info, Monitor, Apple, Terminal } from 'lucide-react';
 import Section from '../components/Section';
 import SectionHeading from '../components/SectionHeading';
 import type { LocaleContent } from '../i18n/types';
@@ -6,6 +6,12 @@ import { APP_RELEASES_URL } from '../constants';
 
 type DownloadSectionProps = {
   content: LocaleContent['download'];
+};
+
+const platformIcons: Record<string, typeof Monitor> = {
+  Windows: Monitor,
+  macOS: Apple,
+  Linux: Terminal,
 };
 
 export default function DownloadSection({ content }: DownloadSectionProps) {
@@ -22,17 +28,28 @@ export default function DownloadSection({ content }: DownloadSectionProps) {
       />
 
       {/* Platform availability */}
-      <ul className="mb-8 grid gap-4 sm:grid-cols-3">
-        {content.platforms.map((p) => (
-          <li key={p.name} className="card flex items-center justify-between">
-            <div>
-              <p className="text-base font-semibold text-content-primary">
-                {p.name}
-              </p>
-              <p className="text-sm text-content-secondary">{p.detail}</p>
-            </div>
-          </li>
-        ))}
+      <ul className="mb-6 grid gap-4 sm:grid-cols-3">
+        {content.platforms.map((p) => {
+          const Icon = platformIcons[p.name] ?? Monitor;
+          return (
+            <li
+              key={p.name}
+              className="card flex items-center gap-4"
+            >
+              <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-bronze/10 text-bronze">
+                <Icon className="h-5 w-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-base font-semibold text-content-primary">
+                  {p.name}
+                </p>
+                <p className="truncate text-sm text-content-secondary">
+                  {p.detail}
+                </p>
+              </div>
+            </li>
+          );
+        })}
       </ul>
 
       {/* Not-yet-implemented notice */}

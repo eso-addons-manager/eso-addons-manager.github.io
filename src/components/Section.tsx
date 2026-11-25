@@ -16,7 +16,7 @@ export default function Section({
   return (
     <section
       id={id}
-      className={`section-padding scroll-mt-20 ${className}`}
+      className={`section-padding scroll-mt-14 ${className}`}
       aria-labelledby={ariaLabelledby}
     >
       <div className="container-page">{children}</div>

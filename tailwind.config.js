@@ -35,7 +35,10 @@ export default {
         ],
       },
       maxWidth: {
-        container: '1200px',
+        container: '1280px',
+      },
+      spacing: {
+        18: '4.5rem',
       },
       borderRadius: {
         DEFAULT: '6px',
@@ -45,9 +48,14 @@ export default {
           '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        'contour-drift': {
+          '0%': { transform: 'translate3d(0, 0, 0)' },
+          '100%': { transform: 'translate3d(-40px, 0, 0)' },
+        },
       },
       animation: {
         'fade-in-up': 'fade-in-up 0.4s ease-out both',
+        'contour-drift': 'contour-drift 60s linear infinite',
       },
     },
   },
