@@ -24,6 +24,29 @@ export type Platform = {
   detail: string;
 };
 
+export type DownloadPlatform = Platform & {
+  note: string;
+};
+
+export type GettingStartedStep = {
+  title: string;
+  body: string;
+  emphasis: boolean;
+};
+
+export type SupportChannel = {
+  label: string;
+  description: string;
+  linkLabel: string;
+  url: string;
+};
+
+export type FooterLink = {
+  label: string;
+  url: string;
+  external: boolean;
+};
+
 export type LocaleContent = {
   meta: {
     title: string;
@@ -61,8 +84,7 @@ export type LocaleContent = {
   notice: {
     title: string;
     body: string;
-    bullet1: string;
-    bullet2: string;
+    bullets: string[];
   };
   features: {
     title: string;
@@ -81,19 +103,13 @@ export type LocaleContent = {
     notImplemented: string;
     fallbackLink: string;
     fallbackNote: string;
-    platforms: Platform[];
+    checksumNote: string;
+    platforms: DownloadPlatform[];
   };
   gettingStarted: {
     title: string;
     subtitle: string;
-    step1Title: string;
-    step1Body: string;
-    step2Title: string;
-    step2Body: string;
-    step3Title: string;
-    step3Body: string;
-    step4Title: string;
-    step4Body: string;
+    steps: GettingStartedStep[];
   };
   changelog: {
     title: string;
@@ -115,19 +131,21 @@ export type LocaleContent = {
   support: {
     title: string;
     subtitle: string;
-    body: string;
-    reportIssue: string;
-    viewRepo: string;
+    channels: SupportChannel[];
+    reportGuideTitle: string;
+    reportGuideIntro: string;
+    reportGuideItems: string[];
+    privacyWarning: string;
   };
   footer: {
     tagline: string;
     disclaimerTitle: string;
     disclaimerBody: string;
+    notAffiliated: string;
     sections: string;
-    applicationRepo: string;
-    reportIssue: string;
+    resourcesTitle: string;
+    links: FooterLink[];
     license: string;
     copyright: string;
-    notAffiliated: string;
   };
 };

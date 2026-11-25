@@ -1,4 +1,4 @@
-import { ExternalLink, Info, Monitor, Apple, Terminal } from 'lucide-react';
+import { ExternalLink, Info, ShieldCheck, Monitor, Apple, Terminal } from 'lucide-react';
 import Section from '../components/Section';
 import SectionHeading from '../components/SectionHeading';
 import type { LocaleContent } from '../i18n/types';
@@ -27,32 +27,40 @@ export default function DownloadSection({ content }: DownloadSectionProps) {
         id="download-title"
       />
 
-      {/* Platform availability */}
+      {/* Platform availability with per-platform notes */}
       <ul className="mb-6 grid gap-4 sm:grid-cols-3">
         {content.platforms.map((p) => {
           const Icon = platformIcons[p.name] ?? Monitor;
           return (
-            <li
-              key={p.name}
-              className="card flex items-center gap-4"
-            >
-              <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-bronze/10 text-bronze">
-                <Icon className="h-5 w-5" aria-hidden="true" />
+            <li key={p.name} className="card flex flex-col">
+              <div className="flex items-center gap-3.5">
+                <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-bronze/10 text-bronze">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-semibold text-content-primary">
+                    {p.name}
+                  </p>
+                  <p className="text-sm text-content-secondary">{p.detail}</p>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="text-base font-semibold text-content-primary">
-                  {p.name}
-                </p>
-                <p className="truncate text-sm text-content-secondary">
-                  {p.detail}
-                </p>
-              </div>
+              <p className="mt-4 text-sm leading-relaxed text-content-secondary">
+                {p.note}
+              </p>
             </li>
           );
         })}
       </ul>
 
-      {/* Not-yet-implemented notice */}
+      {/* Checksum recommendation */}
+      <div className="mb-6 flex items-start gap-3 rounded-lg border border-graphite-border bg-graphite-card p-4">
+        <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-bronze" aria-hidden="true" />
+        <p className="text-sm leading-relaxed text-content-secondary">
+          {content.checksumNote}
+        </p>
+      </div>
+
+      {/* Not-yet-implemented notice with fallback link */}
       <div className="card flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-bronze" aria-hidden="true" />

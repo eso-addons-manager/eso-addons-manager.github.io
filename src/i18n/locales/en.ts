@@ -1,10 +1,17 @@
 import type { LocaleContent } from '../types';
+import {
+  APP_ISSUES_URL,
+  APP_REPO_URL,
+  APP_RELEASES_URL,
+  WEBSITE_ISSUES_URL,
+  WEBSITE_REPO_URL,
+} from '../../constants';
 
 export const en: LocaleContent = {
   meta: {
     title: 'ESO Addons Manager — Your add-ons. Simplified.',
     description:
-      'ESO Addons Manager is a desktop add-on manager for The Elder Scrolls Online. Install, update and organize your ESO add-ons on Windows, macOS and Linux.',
+      'Manage your The Elder Scrolls Online add-ons and libraries with ESO Addons Manager for Windows, macOS and Linux. Explore features, downloads and setup instructions.',
   },
   nav: {
     features: 'Features',
@@ -23,12 +30,12 @@ export const en: LocaleContent = {
     closeMenu: 'Close menu',
   },
   hero: {
-    eyebrow: 'The Elder Scrolls Online',
+    eyebrow: 'THE ELDER SCROLLS ONLINE',
     title: 'ESO Addons Manager',
     subtitle: 'Your add-ons. Simplified.',
     tagline: 'Your add-ons. Simplified.',
     description:
-      'A desktop add-on manager for The Elder Scrolls Online. Install, update and organize your add-ons and libraries from a single application, with automatic dependency resolution and synchronization on launch.',
+      'Install, update and organize your The Elder Scrolls Online add-ons and libraries from a single desktop application. Manage dependencies, scan existing add-ons and keep your setup synchronized.',
     viewDownloads: 'View downloads',
     viewOnGithub: 'View on GitHub',
     platformLabel: 'Available for',
@@ -42,9 +49,12 @@ export const en: LocaleContent = {
   },
   notice: {
     title: 'Important notice before first use',
-    body: 'Before using ESO Addons Manager for the first time, back up your AddOns folder and verify that the selected folder is correct. The manager may delete files and add-ons that it does not manage.',
-    bullet1: 'Back up your AddOns folder before the first synchronization.',
-    bullet2: 'Use Scan for existing add-ons before the first synchronization to preserve existing add-ons.',
+    body: 'Before using ESO Addons Manager for the first time, back up your AddOns folder and verify that the selected folder is correct. Synchronization may delete files and add-ons that the manager does not manage.',
+    bullets: [
+      'Create a backup of your AddOns folder before your first synchronization.',
+      'Use Scan to discover existing add-ons and review the results before synchronizing.',
+      'Keep synchronization on launch disabled until your initial setup is complete and verified.',
+    ],
   },
   features: {
     title: 'Features',
@@ -55,67 +65,64 @@ export const en: LocaleContent = {
         icon: 'download',
         title: 'Install, update and remove add-ons',
         description:
-          'Browse, install, update and remove add-ons directly from the manager without manual file handling.',
+          'Manage your ESO add-ons from a single application without manually handling every installation or update.',
       },
       {
         icon: 'refresh',
         title: 'Synchronize add-ons and libraries',
-        description:
-          'Keep your add-ons and their required libraries synchronized with a single action.',
+        description: 'Synchronize managed add-ons and their associated libraries.',
       },
       {
         icon: 'link',
-        title: 'Automatic dependency management',
+        title: 'Dependency management',
         description:
-          'Required dependencies are resolved and installed automatically so add-ons work out of the box.',
+          'Detect and resolve required dependencies. Some dependencies may require a user selection.',
       },
       {
         icon: 'search',
         title: 'Scan for existing add-ons',
         description:
-          'Detect add-ons already present in your AddOns folder so they are preserved during synchronization.',
+          'Discover add-ons already present in your AddOns folder and review them before your first synchronization.',
       },
       {
         icon: 'rocket',
         title: 'Synchronization on launch',
         description:
-          'Add-ons are checked and synchronized automatically every time the application starts.',
+          'Optionally synchronize managed add-ons when the application starts.',
       },
       {
         icon: 'library',
         title: 'Library management',
         description:
-          'Manage shared libraries alongside add-ons and keep them at compatible versions.',
+          'Manage shared libraries alongside your installed add-ons.',
       },
       {
         icon: 'ban',
         title: 'Exclusions',
         description:
-          'Exclude specific add-ons or folders from synchronization and updates.',
+          "Exclude selected add-ons or folders from synchronization according to the application's available settings.",
       },
       {
         icon: 'package',
         title: 'Custom ZIP add-ons',
-        description:
-          'Install add-ons distributed as ZIP archives from outside the standard sources.',
+        description: 'Add custom add-ons distributed as ZIP archives.',
       },
       {
         icon: 'star',
         title: 'Favourites',
-        description:
-          'Mark frequently used add-ons as favourites for quick access and tracking.',
+        description: 'Mark add-ons as favourites for convenient access.',
       },
       {
         icon: 'coins',
         title: 'Tamriel Trade Centre price tables',
         description:
-          'Tamriel Trade Centre price table updates are applied during synchronization when applicable.',
+          'Update TTC price tables during synchronization when the corresponding add-on is installed and the feature is applicable.',
       },
       {
         icon: 'fileText',
         title: 'Diagnostic logs and settings',
         description:
-          'Review diagnostic logs and configure the manager to match your setup and preferences.',
+          'Review diagnostic information and configure the application to suit your setup.',
       },
     ],
   },
@@ -130,34 +137,68 @@ export const en: LocaleContent = {
   download: {
     title: 'Download',
     subtitle:
-      'ESO Addons Manager is available for Windows, macOS and Linux. Automatic release detection is not yet implemented on this website.',
+      'The available installation packages depend on your operating system and architecture. Automatic release detection is not yet implemented on this website.',
     notImplemented:
       'Automatic release integration is not yet implemented. Download links and version information are not displayed automatically at this stage.',
     fallbackLink: 'Open releases on GitHub',
     fallbackNote:
       'You will be redirected to the official GitHub Releases page of the application repository.',
+    checksumNote:
+      'Download files from the original GitHub Releases page and verify published checksums when available.',
     platforms: [
-      { name: 'Windows', detail: 'AMD64' },
-      { name: 'macOS', detail: 'Apple Silicon ARM64' },
-      { name: 'Linux', detail: 'AMD64' },
+      {
+        name: 'Windows',
+        detail: 'AMD64',
+        note: 'AMD64 builds. Windows SmartScreen may display a warning because the application is unsigned.',
+      },
+      {
+        name: 'macOS',
+        detail: 'Apple Silicon ARM64',
+        note: 'Apple Silicon ARM64 builds. Intel Mac support is not currently listed.',
+      },
+      {
+        name: 'Linux',
+        detail: 'AMD64',
+        note: 'AMD64 builds. Select the package appropriate for your distribution.',
+      },
     ],
   },
   gettingStarted: {
     title: 'Getting Started',
     subtitle:
-      'A few steps to set up ESO Addons Manager safely before your first synchronization.',
-    step1Title: 'Download and install',
-    step1Body:
-      'Download the latest release for your platform from the GitHub Releases page and install the application.',
-    step2Title: 'Back up your AddOns folder',
-    step2Body:
-      'Before launching, back up your existing ESO AddOns folder so you can restore it if anything goes wrong.',
-    step3Title: 'Select your AddOns folder',
-    step3Body:
-      'On first launch, point the manager to your ESO AddOns folder and verify the path is correct.',
-    step4Title: 'Scan before synchronizing',
-    step4Body:
-      'Use Scan for existing add-ons before the first synchronization so add-ons the manager does not control are preserved.',
+      'A clear setup guide to configure ESO Addons Manager safely before your first synchronization.',
+    steps: [
+      {
+        title: 'Download and install',
+        body: 'Choose the appropriate package for your operating system and architecture from the original GitHub Releases page.',
+        emphasis: false,
+      },
+      {
+        title: 'Back up your AddOns folder',
+        body: 'Before launching or synchronizing the application, create a backup of your existing ESO AddOns folder.',
+        emphasis: true,
+      },
+      {
+        title: 'Verify the AddOns folder',
+        body: 'Check that the selected folder is the correct ESO AddOns directory. Keep synchronization on launch disabled during initial setup.',
+        emphasis: false,
+      },
+      {
+        title: 'Scan existing add-ons',
+        body: 'Use the Scan function to discover existing add-ons. Review the results and configure exclusions where necessary.',
+        emphasis: true,
+      },
+      {
+        title: 'Review and synchronize',
+        body: 'Review the managed add-ons, libraries, dependencies and exclusions before starting your first synchronization. Unmanaged files may be deleted during synchronization.',
+        emphasis: false,
+      },
+      {
+        title: 'Maintain your setup',
+        body: 'Use the manager to maintain your add-ons and libraries. Enable synchronization on launch only after verifying that your setup is correct.',
+        emphasis: false,
+      },
+    ],
   },
   changelog: {
     title: 'Changelog',
@@ -174,9 +215,9 @@ export const en: LocaleContent = {
     plannedBadge: 'Planned',
     items: [
       {
-        title: 'Import and export installed add-ons',
+        title: 'Import and export of installed add-ons',
         description:
-          'A way to import and export your installed add-ons list is planned for a future release. It is not currently available.',
+          'Import and export functionality for installed add-ons is planned. It is not currently available and no release date has been announced.',
         status: 'planned',
       },
     ],
@@ -186,50 +227,145 @@ export const en: LocaleContent = {
     subtitle: 'Common questions about ESO Addons Manager.',
     items: [
       {
-        question: 'Is ESO Addons Manager affiliated with Bethesda or ZeniMax?',
+        question: 'What is ESO Addons Manager?',
         answer:
-          'No. ESO Addons Manager is an independent, community-created tool. It is not affiliated with, endorsed by, or sponsored by ZeniMax Media Inc. or Bethesda Softworks.',
+          'A desktop application for installing, updating, removing and managing add-ons for The Elder Scrolls Online.',
       },
       {
-        question: 'Which platforms are supported?',
+        question: 'Is ESO Addons Manager free?',
         answer:
-          'The application supports Windows AMD64, macOS Apple Silicon ARM64 and Linux AMD64.',
+          'Yes. The application source code and releases are publicly available on GitHub.',
+      },
+      {
+        question: 'Which operating systems are supported?',
+        answer:
+          'Windows AMD64, macOS Apple Silicon ARM64 and Linux AMD64.',
+      },
+      {
+        question: 'Are Intel Macs supported?',
+        answer:
+          'The currently supported macOS architecture is Apple Silicon ARM64. Intel Mac support is not currently listed.',
+      },
+      {
+        question: 'What should I do if I already have installed add-ons?',
+        answer:
+          'Back up your AddOns folder, verify the selected directory, use Scan and review the detected add-ons before synchronizing.',
+      },
+      {
+        question: 'Can the manager delete my existing add-ons?',
+        answer:
+          'Yes. Synchronization may delete files and add-ons that the manager does not manage. Always keep a backup and review your configuration before synchronizing.',
+      },
+      {
+        question: 'Are dependencies installed automatically?',
+        answer:
+          'The manager supports automatic dependency resolution, but some dependencies may require a user selection.',
+      },
+      {
+        question: 'Can I install custom ZIP add-ons?',
+        answer: 'Yes. The application supports custom ZIP add-ons.',
+      },
+      {
+        question: 'Can I exclude add-ons from synchronization?',
+        answer: 'Yes. The application supports exclusions.',
+      },
+      {
+        question: 'Does the manager support Tamriel Trade Centre?',
+        answer:
+          'TTC price tables can be updated during synchronization when the corresponding add-on is installed and the feature is applicable.',
+      },
+      {
+        question: 'Why does Windows SmartScreen show a warning?',
+        answer:
+          'Windows may display a warning because the application is unsigned. Verify the download source and published checksums before running the application. An unsigned application is not automatically malicious, but its safety cannot be guaranteed solely by its availability on GitHub.',
+      },
+      {
+        question: 'Does the manager update itself automatically?',
+        answer:
+          'The application can check for updates and direct users to the download page. This does not automatically install the new application version.',
       },
       {
         question: 'Can I import or export my installed add-ons?',
         answer:
-          'Not yet. Importing and exporting installed add-ons is planned for a future release and has no announced release date.',
+          'Import and export functionality is planned and is not currently presented as an available feature.',
       },
       {
-        question: 'Will the manager delete my existing add-ons?',
+        question: 'Where can I report application bugs?',
         answer:
-          'The manager may delete files and add-ons that it does not manage. Always back up your AddOns folder and run Scan for existing add-ons before the first synchronization.',
-      },
-      {
-        question: 'Where do downloads come from?',
-        answer:
-          'Downloads are hosted on the application GitHub repository. This website links to the official GitHub Releases page and does not host or mirror any files.',
+          'Report application-related issues in the original application repository on GitHub. Remove personal information from diagnostic logs before sharing them.',
       },
     ],
   },
   support: {
     title: 'Support',
-    subtitle: 'Need help or found a bug?',
-    body: 'ESO Addons Manager is maintained by powerbq on GitHub. For bug reports, feature requests and questions, please use the GitHub Issues page of the application repository.',
-    reportIssue: 'Report an issue',
-    viewRepo: 'View application repository',
+    subtitle: 'Two types of support are available depending on your question.',
+    channels: [
+      {
+        label: 'Application support',
+        description:
+          'For application bugs, feature requests and application-related questions.',
+        linkLabel: 'Report an application issue',
+        url: APP_ISSUES_URL,
+      },
+      {
+        label: 'Website support',
+        description:
+          'For website bugs, incorrect information, translation issues or broken website links.',
+        linkLabel: 'Report a website issue',
+        url: WEBSITE_ISSUES_URL,
+      },
+    ],
+    reportGuideTitle: 'How to write a useful bug report',
+    reportGuideIntro:
+      'A useful bug report helps maintainers reproduce and fix the problem. Include the following when applicable:',
+    reportGuideItems: [
+      'Application version, if applicable',
+      'Operating system',
+      'Description of the problem',
+      'Steps to reproduce',
+      'Expected and actual behaviour',
+      'Relevant screenshots or diagnostic logs',
+    ],
+    privacyWarning:
+      'Do not include passwords, tokens or personal information in public issue reports.',
   },
   footer: {
     tagline: 'Your add-ons. Simplified.',
     disclaimerTitle: 'Independent project disclaimer',
     disclaimerBody:
-      'This is an independent presentation website for ESO Addons Manager. The application source code and releases are maintained by powerbq on GitHub. This website is not affiliated with, endorsed by, or sponsored by ZeniMax Media Inc. or Bethesda Softworks.',
+      'This is an independent presentation website for ESO Addons Manager. The application source code and releases are maintained by powerbq on GitHub.',
+    notAffiliated:
+      'This website is not affiliated with, endorsed by, or sponsored by ZeniMax Media Inc. or Bethesda Softworks. The Elder Scrolls Online and related trademarks belong to their respective owners.',
     sections: 'Sections',
-    applicationRepo: 'Application repository',
-    reportIssue: 'Report an issue',
+    resourcesTitle: 'Resources',
+    links: [
+      {
+        label: 'Application repository',
+        url: APP_REPO_URL,
+        external: true,
+      },
+      {
+        label: 'Application releases',
+        url: APP_RELEASES_URL,
+        external: true,
+      },
+      {
+        label: 'Application issues',
+        url: APP_ISSUES_URL,
+        external: true,
+      },
+      {
+        label: 'Website repository',
+        url: WEBSITE_REPO_URL,
+        external: true,
+      },
+      {
+        label: 'Website issues',
+        url: WEBSITE_ISSUES_URL,
+        external: true,
+      },
+    ],
     license: 'MIT License',
     copyright: 'ESO Addons Manager website contributors',
-    notAffiliated:
-      'The Elder Scrolls Online is a trademark of ZeniMax Media Inc. This project is not affiliated with or endorsed by ZeniMax Media Inc. or Bethesda Softworks.',
   },
 };

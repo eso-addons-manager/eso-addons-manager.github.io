@@ -1,4 +1,12 @@
-import { Download, ShieldCheck, FolderSearch, ScanLine } from 'lucide-react';
+import {
+  Download,
+  ShieldCheck,
+  FolderCheck,
+  ScanLine,
+  ListChecks,
+  Settings2,
+  type LucideIcon,
+} from 'lucide-react';
 import Section from '../components/Section';
 import SectionHeading from '../components/SectionHeading';
 import type { LocaleContent } from '../i18n/types';
@@ -7,36 +15,18 @@ type GettingStartedSectionProps = {
   content: LocaleContent['gettingStarted'];
 };
 
+const stepIcons: LucideIcon[] = [
+  Download,
+  ShieldCheck,
+  FolderCheck,
+  ScanLine,
+  ListChecks,
+  Settings2,
+];
+
 export default function GettingStartedSection({
   content,
 }: GettingStartedSectionProps) {
-  const steps = [
-    {
-      title: content.step1Title,
-      body: content.step1Body,
-      icon: Download,
-      emphasis: false,
-    },
-    {
-      title: content.step2Title,
-      body: content.step2Body,
-      icon: ShieldCheck,
-      emphasis: true,
-    },
-    {
-      title: content.step3Title,
-      body: content.step3Body,
-      icon: FolderSearch,
-      emphasis: false,
-    },
-    {
-      title: content.step4Title,
-      body: content.step4Body,
-      icon: ScanLine,
-      emphasis: true,
-    },
-  ];
-
   return (
     <Section
       id="getting-started"
@@ -48,16 +38,14 @@ export default function GettingStartedSection({
         subtitle={content.subtitle}
         id="getting-started-title"
       />
-      <ol className="grid gap-4 sm:grid-cols-2">
-        {steps.map((step, index) => {
-          const Icon = step.icon;
+      <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {content.steps.map((step, index) => {
+          const Icon = stepIcons[index] ?? Download;
           return (
             <li
               key={step.title}
               className={`card flex h-full flex-col ${
-                step.emphasis
-                  ? 'border-bronze/30 bg-bronze/[0.04]'
-                  : ''
+                step.emphasis ? 'border-bronze/30 bg-bronze/[0.04]' : ''
               }`}
             >
               <div className="flex items-center gap-3">

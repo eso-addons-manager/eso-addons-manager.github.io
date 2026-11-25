@@ -1,14 +1,41 @@
-import { Github, AlertCircle, ExternalLink } from 'lucide-react';
+import { Github, AlertCircle, ExternalLink, Globe, GitBranch } from 'lucide-react';
 import Logo from './Logo';
 import type { LocaleContent } from '../i18n/types';
-import { APP_REPO_URL, APP_ISSUES_URL } from '../constants';
+import type { FooterLink } from '../i18n/types';
 
 type FooterProps = {
   content: LocaleContent;
 };
 
+const linkIcons: Record<string, typeof Github> = {
+  'Application repository': GitBranch,
+  'Application releases': Github,
+  'Application issues': AlertCircle,
+  'Website repository': Globe,
+  'Website issues': AlertCircle,
+};
+
+function FooterLinkRow({ link }: { link: FooterLink }) {
+  const Icon = linkIcons[link.label] ?? ExternalLink;
+  return (
+    <li>
+      <a
+        href={link.url}
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener noreferrer' : undefined}
+        className="inline-flex items-center gap-2 text-content-secondary transition-colors hover:text-bronze"
+      >
+        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <span>{link.label}</span>
+        <ExternalLink className="h-3 w-3 opacity-50" aria-hidden="true" />
+      </a>
+    </li>
+  );
+}
+
 export default function Footer({ content }: FooterProps) {
   const year = new Date().getFullYear();
+  const { footer } = content;
 
   return (
     <footer className="border-t border-graphite-border bg-graphite-section">
@@ -23,14 +50,14 @@ export default function Footer({ content }: FooterProps) {
               </span>
             </div>
             <p className="mt-3 text-sm text-content-secondary">
-              {content.footer.tagline}
+              {footer.tagline}
             </p>
           </div>
 
           {/* Sections */}
           <div className="md:col-span-3">
             <p className="text-xs font-semibold uppercase tracking-wider text-content-secondary">
-              {content.footer.sections}
+              {footer.sections}
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
@@ -56,36 +83,15 @@ export default function Footer({ content }: FooterProps) {
             </ul>
           </div>
 
-          {/* Application repository */}
+          {/* Resources */}
           <div className="md:col-span-5">
             <p className="text-xs font-semibold uppercase tracking-wider text-content-secondary">
-              {content.footer.applicationRepo}
+              {footer.resourcesTitle}
             </p>
             <ul className="mt-4 space-y-2.5 text-sm">
-              <li>
-                <a
-                  href={APP_REPO_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-content-secondary transition-colors hover:text-bronze"
-                >
-                  <Github className="h-4 w-4" aria-hidden="true" />
-                  {content.footer.applicationRepo}
-                  <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={APP_ISSUES_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-content-secondary transition-colors hover:text-bronze"
-                >
-                  <AlertCircle className="h-4 w-4" aria-hidden="true" />
-                  {content.footer.reportIssue}
-                  <ExternalLink className="h-3 w-3 opacity-60" aria-hidden="true" />
-                </a>
-              </li>
+              {footer.links.map((link) => (
+                <FooterLinkRow key={link.label} link={link} />
+              ))}
             </ul>
           </div>
         </div>
@@ -93,16 +99,16 @@ export default function Footer({ content }: FooterProps) {
         {/* Disclaimer */}
         <div className="mt-10 border-t border-graphite-border pt-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-bronze">
-            {content.footer.disclaimerTitle}
+            {footer.disclaimerTitle}
           </p>
           <p className="mt-3 text-sm leading-relaxed text-content-secondary">
-            {content.footer.disclaimerBody}
+            {footer.disclaimerBody}
           </p>
-          <p className="mt-3 text-xs text-content-secondary">
-            {content.footer.notAffiliated}
+          <p className="mt-3 text-sm leading-relaxed text-content-secondary">
+            {footer.notAffiliated}
           </p>
           <p className="mt-4 text-xs text-content-secondary">
-            © {year} {content.footer.copyright}. {content.footer.license}.
+            © {year} {footer.copyright}. {footer.license}.
           </p>
         </div>
       </div>

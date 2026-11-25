@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './sections/Hero';
-import NoticeSection from './sections/NoticeSection';
 import FeaturesSection from './sections/FeaturesSection';
 import ScreenshotsSection from './sections/ScreenshotsSection';
 import DownloadSection from './sections/DownloadSection';
@@ -33,8 +32,11 @@ function App() {
       <Header content={content} />
 
       <main className="flex-1">
-        <Hero content={content.hero} downloadLabel={content.hero.viewDownloads} />
-        <NoticeSection content={content.notice} />
+        <Hero
+          content={content.hero}
+          notice={content.notice}
+          downloadLabel={content.hero.viewDownloads}
+        />
         <FeaturesSection content={content.features} />
         <ScreenshotsSection content={content.screenshots} />
         <DownloadSection content={content.download} />

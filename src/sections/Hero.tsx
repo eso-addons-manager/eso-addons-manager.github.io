@@ -1,9 +1,11 @@
 import { Download, Github, Monitor, Apple, Terminal } from 'lucide-react';
 import type { LocaleContent } from '../i18n/types';
 import { APP_REPO_URL } from '../constants';
+import WarningNotice from '../components/WarningNotice';
 
 type HeroProps = {
   content: LocaleContent['hero'];
+  notice: LocaleContent['notice'];
   downloadLabel: string;
 };
 
@@ -13,7 +15,7 @@ const platformIcons: Record<string, typeof Monitor> = {
   Linux: Terminal,
 };
 
-export default function Hero({ content, downloadLabel }: HeroProps) {
+export default function Hero({ content, notice, downloadLabel }: HeroProps) {
   return (
     <section
       id="hero"
@@ -26,9 +28,10 @@ export default function Hero({ content, downloadLabel }: HeroProps) {
       />
 
       <div className="container-page relative py-14 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+        {/* Two-column grid: text + screenshot on desktop. */}
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Left column: title, description, actions, platforms */}
-          <div className="animate-fade-in-up">
+          <div className="animate-fade-in-up order-1">
             <p className="eyebrow mb-4">{content.eyebrow}</p>
             <h1 className="text-4xl font-semibold leading-[1.1] text-content-primary sm:text-5xl lg:text-[3.25rem]">
               {content.title}
@@ -78,8 +81,9 @@ export default function Hero({ content, downloadLabel }: HeroProps) {
             </div>
           </div>
 
-          {/* Right column: clearly-labeled screenshot placeholder */}
-          <div className="animate-fade-in-up lg:pl-4">
+          {/* Right column: clearly-labeled screenshot placeholder.
+              On mobile, rendered after the notice to preserve reading order. */}
+          <div className="animate-fade-in-up order-3 lg:pl-4">
             <div
               className="flex aspect-video items-center justify-center rounded-lg border border-dashed border-graphite-border bg-graphite-section/90"
               aria-label={content.screenshotAlt}
@@ -98,6 +102,12 @@ export default function Hero({ content, downloadLabel }: HeroProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Warning notice: appears between text and screenshot on mobile
+            (order-2), full-width below the grid on desktop. */}
+        <div className="animate-fade-in-up order-2 mt-8 lg:mt-10">
+          <WarningNotice content={notice} />
         </div>
       </div>
     </section>

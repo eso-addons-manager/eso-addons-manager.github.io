@@ -27,20 +27,15 @@ export default function WarningNotice({ content }: WarningNoticeProps) {
             {content.body}
           </p>
           <ul className="mt-3 space-y-2 text-sm text-content-primary">
-            <li className="flex items-start gap-2.5">
-              <span
-                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-warning"
-                aria-hidden="true"
-              />
-              <span className="leading-relaxed">{content.bullet1}</span>
-            </li>
-            <li className="flex items-start gap-2.5">
-              <span
-                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-warning"
-                aria-hidden="true"
-              />
-              <span className="leading-relaxed">{content.bullet2}</span>
-            </li>
+            {content.bullets.map((bullet, index) => (
+              <li key={index} className="flex items-start gap-2.5">
+                <span
+                  className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-warning"
+                  aria-hidden="true"
+                />
+                <span className="leading-relaxed">{bullet}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
