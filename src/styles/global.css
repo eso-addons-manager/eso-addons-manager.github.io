@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-graphite-bg text-content-primary font-sans antialiased;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  /* Visible keyboard focus indicators for all interactive elements. */
+  a:focus-visible,
+  button:focus-visible {
+    @apply outline-none ring-2 ring-bronze ring-offset-2 ring-offset-graphite-bg rounded;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 sm:py-20 lg:py-24;
+  }
+
+  .card {
+    @apply rounded-lg border border-graphite-border bg-graphite-card p-6;
+  }
+
+  .eyebrow {
+    @apply text-sm font-medium uppercase tracking-wider text-bronze;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none;
+  }
+
+  .btn-primary {
+    @apply bg-bronze text-graphite-bg hover:bg-bronze-hover;
+  }
+
+  .btn-secondary {
+    @apply border border-graphite-border bg-graphite-card text-content-primary hover:border-bronze hover:text-bronze;
+  }
+
+  .link-bronze {
+    @apply text-bronze underline-offset-4 hover:underline;
+  }
+}

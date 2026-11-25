@@ -144,6 +144,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+dist/
+
+# Node
+node_modules/
 
 # Astro generated types
 .astro/
