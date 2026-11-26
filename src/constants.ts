@@ -10,9 +10,9 @@ export const APP_RELEASES_URL =
 
 // This independent presentation website's own repository.
 export const WEBSITE_REPO_URL =
-  'https://github.com/eso-addons-manager/eso-addons-manager';
+  'https://github.com/eso-addons-manager/eso-addons-manager.github.io';
 export const WEBSITE_ISSUES_URL =
-  'https://github.com/eso-addons-manager/eso-addons-manager/issues';
+  'https://github.com/eso-addons-manager/eso-addons-manager.github.io/issues';
 
 // Reserved for the future release integration stage. Not used yet.
 export const GITHUB_RELEASES_API_URL =

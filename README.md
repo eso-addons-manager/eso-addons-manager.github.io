@@ -64,7 +64,7 @@ npm run typecheck
 ## Deployment path
 
 The project is configured to build for the GitHub Pages subpath
-`/eso-addons-manager/`. The production build is emitted to `dist/`.
+`/`. The production build is emitted to `dist/`.
 
 ## Current stage
 
