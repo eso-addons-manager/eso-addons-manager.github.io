@@ -137,14 +137,35 @@ export const en: LocaleContent = {
   download: {
     title: 'Download',
     subtitle:
-      'The available installation packages depend on your operating system and architecture. Automatic release detection is not yet implemented on this website.',
-    notImplemented:
-      'Automatic release integration is not yet implemented. Download links and version information are not displayed automatically at this stage.',
+      'The available installation packages depend on your operating system and architecture. Download files from the original GitHub Releases page.',
     fallbackLink: 'Open releases on GitHub',
     fallbackNote:
       'You will be redirected to the official GitHub Releases page of the application repository.',
     checksumNote:
-      'Download files from the original GitHub Releases page and verify published checksums when available.',
+      'Verify published checksums when available before running the application.',
+    latestVersion: 'Latest version',
+    publishedOn: 'Published',
+    loadingReleases: 'Loading release information…',
+    fetchError:
+      'Release information could not be loaded. You can still download from GitHub directly.',
+    retry: 'Try again',
+    usingCache: 'Showing cached release information.',
+    noReleaseAvailable: 'No release is currently available. Visit GitHub to check for releases.',
+    downloadFile: 'Download',
+    fileSize: 'Size',
+    noPackagesAvailable: 'No packages are available for this platform in the latest release.',
+    checksumsLabel: 'Checksums',
+    unclassifiedAssets: 'Other files',
+    packageLabels: {
+      exe: 'Installer (EXE)',
+      zip: 'Portable (ZIP)',
+      dmg: 'Disk Image (DMG)',
+      appimage: 'AppImage',
+      deb: 'Debian (DEB)',
+      rpm: 'RPM',
+      'pkg.tar.zst': 'Arch (pkg.tar.zst)',
+    },
+    architectureLabel: 'Architecture',
     platforms: [
       {
         name: 'Windows',
@@ -202,11 +223,19 @@ export const en: LocaleContent = {
   },
   changelog: {
     title: 'Changelog',
-    subtitle:
-      'Release notes will be displayed here once automatic release integration is implemented.',
+    subtitle: 'Stable release history, newest first. Notes are rendered from the original GitHub releases.',
     notImplemented:
-      'Automatic release integration is not yet implemented. Release versions, dates and changelog entries are not shown automatically at this stage.',
+      'Release history could not be loaded automatically at this time.',
     fallbackLink: 'View release history on GitHub',
+    loadingReleases: 'Loading release history…',
+    fetchError:
+      'Release history could not be loaded. You can still view all releases on GitHub.',
+    retry: 'Try again',
+    usingCache: 'Showing cached release history.',
+    noReleases: 'No stable releases have been published yet.',
+    emptyNotes: 'No release notes were provided for this release.',
+    viewOnGithub: 'View on GitHub',
+    publishedOn: 'Published',
   },
   roadmap: {
     title: 'Roadmap',

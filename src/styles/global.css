@@ -89,4 +89,68 @@
   .link-bronze {
     @apply text-bronze underline-offset-4 hover:underline;
   }
+
+  /* Safe Markdown rendering for release notes. */
+  .release-markdown h1,
+  .release-markdown h2,
+  .release-markdown h3,
+  .release-markdown h4 {
+    @apply text-content-primary;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+  }
+
+  .release-markdown h1 { font-size: 1.25rem; }
+  .release-markdown h2 { font-size: 1.15rem; }
+  .release-markdown h3 { font-size: 1.05rem; }
+
+  .release-markdown p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .release-markdown ul,
+  .release-markdown ol {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-left: 1.5em;
+  }
+
+  .release-markdown li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+
+  .release-markdown code {
+    @apply rounded bg-graphite-section px-1.5 py-0.5 text-xs;
+  }
+
+  .release-markdown pre {
+    @apply rounded-md bg-graphite-section p-3;
+    overflow-x: auto;
+  }
+
+  .release-markdown pre code {
+    background: transparent;
+    padding: 0;
+  }
+
+  .release-markdown blockquote {
+    @apply border-l-2 border-bronze/40 pl-4 italic;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .release-markdown a {
+    @apply text-bronze underline-offset-2 hover:underline;
+  }
+
+  .release-markdown table {
+    @apply w-full border-collapse text-xs;
+  }
+
+  .release-markdown th,
+  .release-markdown td {
+    @apply border border-graphite-border px-2 py-1 text-left;
+  }
 }

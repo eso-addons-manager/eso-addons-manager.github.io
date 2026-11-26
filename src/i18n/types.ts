@@ -100,11 +100,32 @@ export type LocaleContent = {
   download: {
     title: string;
     subtitle: string;
-    notImplemented: string;
     fallbackLink: string;
     fallbackNote: string;
     checksumNote: string;
     platforms: DownloadPlatform[];
+    latestVersion: string;
+    publishedOn: string;
+    loadingReleases: string;
+    fetchError: string;
+    retry: string;
+    usingCache: string;
+    noReleaseAvailable: string;
+    downloadFile: string;
+    fileSize: string;
+    noPackagesAvailable: string;
+    checksumsLabel: string;
+    unclassifiedAssets: string;
+    packageLabels: {
+      exe: string;
+      zip: string;
+      dmg: string;
+      appimage: string;
+      deb: string;
+      rpm: string;
+      'pkg.tar.zst': string;
+    };
+    architectureLabel: string;
   };
   gettingStarted: {
     title: string;
@@ -116,6 +137,14 @@ export type LocaleContent = {
     subtitle: string;
     notImplemented: string;
     fallbackLink: string;
+    loadingReleases: string;
+    fetchError: string;
+    retry: string;
+    usingCache: string;
+    noReleases: string;
+    emptyNotes: string;
+    viewOnGithub: string;
+    publishedOn: string;
   };
   roadmap: {
     title: string;
