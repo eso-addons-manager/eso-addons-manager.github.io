@@ -12,7 +12,7 @@ type ChangelogSectionProps = {
 };
 
 export default function ChangelogSection({ content }: ChangelogSectionProps) {
-  const { stableHistory, loading, error, usingCache, retry } = useReleases();
+  const { stableHistory, loading, error, usingCache, retry } = useReleases('history');
 
   return (
     <Section
@@ -40,10 +40,7 @@ export default function ChangelogSection({ content }: ChangelogSectionProps) {
           <div className="flex items-start gap-3">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-warning" aria-hidden="true" />
             <div>
-              <p className="text-sm text-content-primary">{content.fetchError}</p>
-              {usingCache && (
-                <p className="mt-1 text-sm text-content-secondary">{content.usingCache}</p>
-              )}
+              <p className="text-sm text-content-primary">{content.fetchError}</p>              
             </div>
           </div>
           <div className="flex shrink-0 gap-3">

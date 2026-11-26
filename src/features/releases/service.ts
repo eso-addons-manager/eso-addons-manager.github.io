@@ -15,16 +15,28 @@ type CacheEntry<T> = {
   timestamp: number;
 };
 
-function readCache<T>(key: string): T | null {
+function readCache<T>(
+  key: string,
+  allowStale = false
+): T | null {
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return null;
+
     const entry = JSON.parse(raw) as CacheEntry<T>;
-    if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
-      localStorage.removeItem(key);
+
+    if (!Number.isFinite(entry.timestamp)) {
       return null;
     }
-    return entry.data;
+
+    const isExpired =
+      Date.now() - entry.timestamp > CACHE_TTL_MS;
+
+    if (isExpired && !allowStale) {
+      return null;
+    }
+
+    return entry.data ?? null;
   } catch {
     return null;
   }
@@ -108,7 +120,7 @@ export async function fetchLatestRelease(): Promise<LatestResult> {
       writeCache(cacheKey, json);
       return { latest: json, fromCache: false, error: null };
     }
-    return { latest: null, fromCache: false, error: 'INVALID_RESPONSE' };
+    throw new Error('INVALID_RESPONSE');
   } catch (err) {
     const message =
       err instanceof DOMException && err.name === 'AbortError'
@@ -117,8 +129,13 @@ export async function fetchLatestRelease(): Promise<LatestResult> {
           ? err.message
           : 'NETWORK_ERROR';
     // Fall back to stale cache if available (even if expired)
-    const stale = readCache<GithubRelease | null>(cacheKey);
-    return { latest: stale, fromCache: true, error: message };
+const stale = readCache<GithubRelease>(cacheKey, true);
+
+return {
+  latest: stale,
+  fromCache: stale !== null,
+  error: message,
+};
   } finally {
     cancel();
   }
@@ -138,8 +155,13 @@ export async function fetchStableHistory(): Promise<HistoryResult> {
   const { signal, cancel } = withTimeout();
   try {
     while (page <= MAX_PAGES) {
-      const json = await fetchJson(nextUrl, signal);
-      const batch = validateReleases(json);
+const json = await fetchJson(nextUrl, signal);
+
+if (!Array.isArray(json)) {
+  throw new Error('INVALID_RESPONSE');
+}
+
+const batch = validateReleases(json);
       if (batch.length === 0) break;
       allReleases = allReleases.concat(batch);
       if (batch.length < 100) break; // no more pages
@@ -163,12 +185,13 @@ export async function fetchStableHistory(): Promise<HistoryResult> {
         : err instanceof Error
           ? err.message
           : 'NETWORK_ERROR';
-    const stale = readCache<GithubRelease[] | null>(cacheKey);
-    return {
-      stable: stale ?? [],
-      fromCache: true,
-      error: message,
-    };
+const stale = readCache<GithubRelease[]>(cacheKey, true);
+
+return {
+  stable: stale ?? [],
+  fromCache: stale !== null,
+  error: message,
+};
   } finally {
     cancel();
   }

@@ -46,7 +46,9 @@ function ensureHistory() {
   return historyPromise;
 }
 
-export function useReleases(): ReleasesState & { retry: () => void } {
+export function useReleases(
+  section: 'latest' | 'history'
+): ReleasesState & { retry: () => void } {
   const [, forceUpdate] = useState(0);
   const mountedRef = useRef(true);
 
@@ -67,31 +69,34 @@ export function useReleases(): ReleasesState & { retry: () => void } {
     };
   }, []);
 
-  const loading = latestPromise !== null || historyPromise !== null;
+  const loading =
+    section === 'latest'
+      ? latestPromise !== null
+      : historyPromise !== null;
 
-  // If we have no data at all and there's an error, surface the error.
   const error =
-    latestError && historyError && !latestData && historyData.length === 0
+    section === 'latest'
       ? latestError
-      : latestError && !latestData
-        ? latestError
-        : historyError && historyData.length === 0
-          ? historyError
-          : null;
+      : historyError;
 
-  const usingCache = latestFromCache || historyFromCache;
+  const usingCache =
+    section === 'latest'
+      ? latestFromCache && latestData !== null
+      : historyFromCache && historyData.length > 0;
 
-  const retry = () => {
-    latestData = null;
-    historyData = [];
-    latestError = null;
-    historyError = null;
-    latestFromCache = false;
-    historyFromCache = false;
-    latestPromise = null;
-    historyPromise = null;
-    void ensureLatest();
-    void ensureHistory();
+    const retry = () => {
+    if (section === 'latest') {
+      if (latestPromise) return;
+
+      latestError = null;
+      void ensureLatest();
+    } else {
+      if (historyPromise) return;
+
+      historyError = null;
+      void ensureHistory();
+    }
+
     notify();
   };
 

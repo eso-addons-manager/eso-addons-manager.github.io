@@ -50,7 +50,7 @@ const platformKeyToName: Record<string, string> = {
 };
 
 export default function DownloadSection({ content }: DownloadSectionProps) {
-  const { latest, loading, error, usingCache, retry } = useReleases();
+  const { latest, loading, error, usingCache, retry } = useReleases('latest');
 
   const classified = latest ? classifyRelease(latest) : null;
 
@@ -106,9 +106,6 @@ export default function DownloadSection({ content }: DownloadSectionProps) {
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-warning" aria-hidden="true" />
             <div>
               <p className="text-sm text-content-primary">{content.fetchError}</p>
-              {usingCache && (
-                <p className="mt-1 text-sm text-content-secondary">{content.usingCache}</p>
-              )}
             </div>
           </div>
           <div className="flex shrink-0 gap-3">
@@ -218,7 +215,9 @@ export default function DownloadSection({ content }: DownloadSectionProps) {
                                 <span className="flex min-w-0 items-center gap-2.5">
                                   <PkgIcon className="h-4 w-4 shrink-0 text-bronze" aria-hidden="true" />
                                   <span className="truncate font-medium text-content-primary">
-                                    {content.packageLabels[item.packageKind] ?? item.asset.name}
+                                    {item.packageKind === 'checksum'
+                                      ? item.asset.name
+                                      : content.packageLabels[item.packageKind] ?? item.asset.name}
                                   </span>
                                 </span>
                                 <span className="shrink-0 text-xs text-content-secondary">
