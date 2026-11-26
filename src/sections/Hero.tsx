@@ -21,10 +21,13 @@ export default function Hero({ content, notice, downloadLabel }: HeroProps) {
       id="hero"
       className="relative scroll-mt-16 overflow-hidden border-b border-graphite-border bg-graphite-bg"
     >
-      {/* Decorative cartographic background — low opacity, behind content. */}
-      <div
-        className="hero-cartographic pointer-events-none absolute inset-0 opacity-[0.12]"
+      {/* Brand hero background — decorative, low opacity, behind content. */}
+      <img
+        src={`${import.meta.env.BASE_URL}brand/hero-background.svg`}
+        alt=""
         aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18]"
+        decoding="async"
       />
 
       <div className="container-page relative py-14 sm:py-16 lg:py-20">

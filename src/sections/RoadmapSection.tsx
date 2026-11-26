@@ -12,31 +12,42 @@ export default function RoadmapSection({ content }: RoadmapSectionProps) {
     <Section
       id="roadmap"
       ariaLabelledby="roadmap-title"
-      className="border-b border-graphite-border bg-graphite-section"
+      className="relative overflow-hidden border-b border-graphite-border bg-graphite-section"
     >
-      <SectionHeading
-        title={content.title}
-        subtitle={content.subtitle}
-        id="roadmap-title"
+      {/* Subtle map background — decorative, behind content. */}
+      <img
+        src={`${import.meta.env.BASE_URL}brand/map-background.svg`}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.10]"
+        decoding="async"
       />
-      <ul className="grid gap-5">
-        {content.items.map((item) => (
-          <li key={item.title} className="card">
-            <div className="flex flex-wrap items-center gap-3">
-              <CalendarClock className="h-5 w-5 text-bronze" aria-hidden="true" />
-              <h3 className="text-base font-semibold text-content-primary">
-                {item.title}
-              </h3>
-              <span className="rounded-full border border-bronze/40 bg-bronze/10 px-2.5 py-0.5 text-xs font-medium text-bronze">
-                {content.plannedBadge}
-              </span>
-            </div>
-            <p className="mt-3 text-sm text-content-secondary">
-              {item.description}
-            </p>
-          </li>
-        ))}
-      </ul>
+
+      <div className="relative">
+        <SectionHeading
+          title={content.title}
+          subtitle={content.subtitle}
+          id="roadmap-title"
+        />
+        <ul className="grid gap-5">
+          {content.items.map((item) => (
+            <li key={item.title} className="card">
+              <div className="flex flex-wrap items-center gap-3">
+                <CalendarClock className="h-5 w-5 text-bronze" aria-hidden="true" />
+                <h3 className="text-base font-semibold text-content-primary">
+                  {item.title}
+                </h3>
+                <span className="rounded-full border border-bronze/40 bg-bronze/10 px-2.5 py-0.5 text-xs font-medium text-bronze">
+                  {content.plannedBadge}
+                </span>
+              </div>
+              <p className="mt-3 text-sm text-content-secondary">
+                {item.description}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Section>
   );
 }
