@@ -91,11 +91,16 @@ export type LocaleContent = {
     subtitle: string;
     items: FeatureItem[];
   };
-  screenshots: {
+    screenshots: {
     title: string;
     subtitle: string;
-    placeholderLabel: string;
-    placeholderNote: string;
+    viewFullSize: string;
+    items: {
+      file: string;
+      title: string;
+      description: string;
+      alt: string;
+    }[];
   };
   download: {
     title: string;

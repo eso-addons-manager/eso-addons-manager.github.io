@@ -44,7 +44,7 @@ export const en: LocaleContent = {
       { name: 'macOS', detail: 'Apple Silicon ARM64' },
       { name: 'Linux', detail: 'AMD64' },
     ],
-    screenshotAlt: 'Application screenshot placeholder',
+    screenshotAlt: 'ESO Addons Manager catalogue with add-on filters, detailed description and image previews',
     screenshotLabel: 'Application screenshot',
   },
   notice: {
@@ -126,13 +126,69 @@ export const en: LocaleContent = {
       },
     ],
   },
-  screenshots: {
+    screenshots: {
     title: 'Screenshots',
     subtitle:
-      'Screenshots of the application will be added here once they are prepared. No fabricated or mock interface images are shown.',
-    placeholderLabel: 'Screenshot placeholder',
-    placeholderNote:
-      'A real application screenshot will appear here in a later stage.',
+      'Explore the real ESO Addons Manager interface. Select any screenshot to view it at full size.',
+    viewFullSize: 'View full size (opens in a new tab)',
+    items: [
+      {
+        file: 'main-interface.webp',
+        title: 'Catalogue',
+        description:
+          'Browse add-ons with search, filters, sorting and detailed descriptions.',
+        alt: 'ESO Addons Manager catalogue with a selected add-on and image previews',
+      },
+      {
+        file: 'installed-addons.webp',
+        title: 'Installed add-ons',
+        description:
+          'View and manage your installed ESO add-ons.',
+        alt: 'Catalogue showing installed add-ons and their details',
+      },
+      {
+        file: 'dependencies.webp',
+        title: 'Dependencies',
+        description:
+          'Browse dependencies using the dedicated catalogue filter.',
+        alt: 'Active Dependencies filter with a list of libraries',
+      },
+      {
+        file: 'libraries.webp',
+        title: 'Library management',
+        description:
+          'Review available library providers and recommended selections.',
+        alt: 'Libraries tab showing alternative providers for LibAddonMenu',
+      },
+      {
+        file: 'exclusions.webp',
+        title: 'Exclusions',
+        description:
+          'Configure custom exclusions and review automatic exclusions.',
+        alt: 'Exclusions tab with custom and automatic exclusion rules',
+      },
+      {
+        file: 'favourites.webp',
+        title: 'Favourites',
+        description:
+          'Quickly access add-ons marked as favourites.',
+        alt: 'Catalogue filtered to show favourite add-ons',
+      },
+      {
+        file: 'diagnostic-log.webp',
+        title: 'Diagnostic log',
+        description:
+          'Review application activity and synchronization results.',
+        alt: 'Diagnostic log showing application activity',
+      },
+      {
+        file: 'menu.webp',
+        title: 'Application menu',
+        description:
+          'Access TTC price updates, folder options, language settings and update checks.',
+        alt: 'Application menu with configuration and maintenance options',
+      },
+    ],
   },
   download: {
     title: 'Download',

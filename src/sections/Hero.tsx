@@ -84,26 +84,20 @@ export default function Hero({ content, notice, downloadLabel }: HeroProps) {
             </div>
           </div>
 
-          {/* Right column: clearly-labeled screenshot placeholder.
-              On mobile, rendered after the notice to preserve reading order. */}
+                    {/* Right column: real application screenshot. */}
           <div className="animate-fade-in-up order-3 lg:pl-4">
-            <div
-              className="flex aspect-video items-center justify-center rounded-lg border border-dashed border-graphite-border bg-graphite-section/90"
-              aria-label={content.screenshotAlt}
-            >
-              <div className="text-center">
-                <div
-                  className="mx-auto mb-3 h-12 w-12 rounded-md border border-graphite-border bg-graphite-card"
-                  aria-hidden="true"
-                />
-                <p className="text-sm font-medium text-content-secondary">
-                  {content.screenshotLabel}
-                </p>
-                <p className="mt-1 text-xs text-content-secondary">
-                  {content.screenshotAlt}
-                </p>
-              </div>
-            </div>
+            <figure className="overflow-hidden rounded-lg border border-graphite-border bg-graphite-card shadow-2xl">
+              <img
+                src={`${import.meta.env.BASE_URL}screenshots/main-interface.webp`}
+                alt={content.screenshotAlt}
+                width={1919}
+                height={1040}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="block h-auto w-full"
+              />
+            </figure>
           </div>
         </div>
 
