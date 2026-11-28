@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import type { SiteContent } from '../data/types';
+
+interface Props {
+  meta: SiteContent['meta'];
+  skipToContent: string;
+  indexable?: boolean;
+}
+
+const { meta, skipToContent, indexable = true } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(meta.socialImage.src, Astro.site);
+const socialTitle = meta.socialTitle ?? meta.title;
+const socialDescription = meta.socialDescription ?? meta.description;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="author" content={meta.author} />
+    <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
+    {indexable && <link rel="canonical" href={canonical.href} />}
+    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/brand/favicon.ico" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    {indexable && (
+      <>
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonical.href} />
+        <meta property="og:title" content={socialTitle} />
+        <meta property="og:description" content={socialDescription} />
+        <meta property="og:image" content={socialImage.href} />
+        <meta property="og:image:width" content={meta.socialImage.width.toString()} />
+        <meta property="og:image:height" content={meta.socialImage.height.toString()} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={socialTitle} />
+        <meta name="twitter:description" content={socialDescription} />
+        <meta name="twitter:image" content={socialImage.href} />
+      </>
+    )}
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="page">
+      <a class="skip-link" href="#main-content">{skipToContent}</a>
+      <slot name="header" />
+      <main id="main-content" tabindex="-1">
+        <slot />
+      </main>
+      <slot name="footer" />
+    </div>
+  </body>
+</html>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: var(--z-overlay);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-bronze);
+    color: var(--color-background);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-sm);
+  }
+
+  .skip-link:not(:focus) {
+    clip-path: inset(50%);
+  }
+</style>

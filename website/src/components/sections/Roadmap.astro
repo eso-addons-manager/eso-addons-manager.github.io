@@ -1,0 +1,70 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['roadmap'];
+}
+
+const { content } = Astro.props;
+---
+
+<Section id="roadmap" toned class="roadmap">
+  <img slot="background" class="section-art" src="/brand/map-background.svg" alt="" loading="lazy" decoding="async" />
+  <div class="roadmap-content">
+    <SectionHeading id="roadmap-title" title={content.title} subtitle={content.subtitle} />
+    <ul role="list">
+      {content.items.map((item) => (
+        <li class="card">
+          <div class="roadmap-heading">
+            <Icon name="calendarClock" size={20} class="text-accent" />
+            <h3 class="text-base">{item.title}</h3>
+            <span class="badge text-xs text-accent">{content.plannedBadge}</span>
+          </div>
+          <p class="text-sm text-muted">{item.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .roadmap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-art {
+    opacity: 0.1;
+  }
+
+  .roadmap-content {
+    position: relative;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .roadmap-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .badge {
+    padding: var(--space-0-5) var(--space-2-5);
+    border: 1px solid color-mix(in srgb, var(--color-bronze) 40%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-bronze) 10%, transparent);
+    font-weight: var(--font-weight-medium);
+  }
+
+  li p {
+    margin-top: var(--space-3);
+  }
+</style>

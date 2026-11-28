@@ -1,0 +1,61 @@
+{
+  "title": "Features",
+  "subtitle": "Everything you need to keep your add-ons organized, up to date and ready for your next adventure in Tamriel.",
+  "items": [
+    {
+      "icon": "download",
+      "title": "Install, update and remove add-ons",
+      "description": "Manage your ESO add-ons from a single application without manually handling every installation or update."
+    },
+    {
+      "icon": "refresh",
+      "title": "Synchronize add-ons and libraries",
+      "description": "Synchronize managed add-ons and their associated libraries."
+    },
+    {
+      "icon": "link",
+      "title": "Dependency management",
+      "description": "Detect and resolve required dependencies. Some dependencies may require a user selection."
+    },
+    {
+      "icon": "search",
+      "title": "Scan for existing add-ons",
+      "description": "Discover add-ons already present in your AddOns folder and review them before your first synchronization."
+    },
+    {
+      "icon": "rocket",
+      "title": "Synchronization on launch",
+      "description": "Optionally synchronize managed add-ons when the application starts."
+    },
+    {
+      "icon": "library",
+      "title": "Library management",
+      "description": "Manage shared libraries alongside your installed add-ons."
+    },
+    {
+      "icon": "ban",
+      "title": "Exclusions",
+      "description": "Exclude selected add-ons or folders from synchronization according to the application's available settings."
+    },
+    {
+      "icon": "package",
+      "title": "Custom ZIP add-ons",
+      "description": "Add custom add-ons distributed as ZIP archives."
+    },
+    {
+      "icon": "star",
+      "title": "Favourites",
+      "description": "Mark add-ons as favourites for convenient access."
+    },
+    {
+      "icon": "coins",
+      "title": "Tamriel Trade Centre price tables",
+      "description": "Update TTC price tables during synchronization when the corresponding add-on is installed and the feature is applicable."
+    },
+    {
+      "icon": "fileText",
+      "title": "Diagnostic logs and settings",
+      "description": "Review diagnostic information and configure the application to suit your setup."
+    }
+  ]
+}

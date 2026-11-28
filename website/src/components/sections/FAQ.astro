@@ -1,0 +1,86 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['faq'];
+}
+
+const { content } = Astro.props;
+---
+
+<Section id="faq">
+  <SectionHeading id="faq-title" title={content.title} subtitle={content.subtitle} />
+  <ul class="questions" role="list">
+    {content.items.map((item, index) => (
+      <li>
+        <details name="faq" open={index === 0}>
+          <summary>
+            <span>{item.question}</span>
+            <Icon name="chevronDown" size={20} class="chevron" />
+          </summary>
+          <p class="text-sm text-muted text-relaxed">{item.answer}</p>
+        </details>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .questions {
+    overflow: hidden;
+    max-width: 48rem;
+    border: var(--border-default);
+    border-radius: var(--radius-lg);
+    background: var(--color-card);
+  }
+
+  li + li {
+    border-top: var(--border-default);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-heading);
+    list-style: none;
+    cursor: pointer;
+    transition: color 150ms var(--ease-standard);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover {
+    color: var(--color-bronze);
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--color-bronze);
+    outline-offset: -2px;
+    box-shadow: none;
+  }
+
+  .chevron {
+    flex: none;
+    color: var(--color-text-muted);
+    transition: transform var(--duration-hover) var(--ease-standard);
+  }
+
+  details[open] .chevron {
+    transform: rotate(180deg);
+    color: var(--color-bronze);
+  }
+
+  p {
+    padding: 0 var(--space-5) var(--space-5);
+    border-left: 2px solid color-mix(in srgb, var(--color-bronze) 40%, transparent);
+  }
+</style>

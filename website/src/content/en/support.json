@@ -1,0 +1,31 @@
+{
+  "title": "Support",
+  "subtitle": "Two types of support are available depending on your question.",
+  "channels": [
+    {
+      "label": "Application support",
+      "description": "For application bugs, feature requests and application-related questions.",
+      "linkLabel": "Report an application issue",
+      "url": "https://github.com/powerbq/eso-addons-manager/issues",
+      "icon": "alertCircle"
+    },
+    {
+      "label": "Website support",
+      "description": "For website bugs, incorrect information, translation issues or broken website links.",
+      "linkLabel": "Report a website issue",
+      "url": "https://github.com/eso-addons-manager/eso-addons-manager.github.io/issues",
+      "icon": "globe"
+    }
+  ],
+  "reportGuideTitle": "How to write a useful bug report",
+  "reportGuideIntro": "A useful bug report helps maintainers reproduce and fix the problem. Include the following when applicable:",
+  "reportGuideItems": [
+    "Application version, if applicable",
+    "Operating system",
+    "Description of the problem",
+    "Steps to reproduce",
+    "Expected and actual behaviour",
+    "Relevant screenshots or diagnostic logs"
+  ],
+  "privacyWarning": "Do not include passwords, tokens or personal information in public issue reports."
+}

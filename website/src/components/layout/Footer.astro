@@ -1,0 +1,126 @@
+---
+import Brand from '../ui/Brand.astro';
+import Icon from '../ui/Icon.astro';
+import type { NavLink } from '../../data/navigation';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['footer'];
+  brandName: string;
+  sections: NavLink[];
+}
+
+const { content, brandName, sections } = Astro.props;
+const year = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  timeZone: 'Europe/Kyiv',
+}).format(new Date());
+---
+
+<footer>
+  <div class="container-page">
+    <div class="footer-grid">
+      <div>
+        <Brand name={brandName} />
+        <p class="tagline text-sm text-muted">{content.tagline}</p>
+      </div>
+
+      <div>
+        <p class="footer-label text-xs text-muted">{content.sections}</p>
+        <ul class="footer-links text-sm" role="list">
+          {sections.map(({ href, label }) => (
+            <li><a class="section-link text-muted" href={href}>{label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-label text-xs text-muted">{content.resourcesTitle}</p>
+        <ul class="footer-links text-sm" role="list">
+          {content.links.map((link) => (
+            <li>
+              <a
+                class="icon-link text-muted"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon name={link.icon} />
+                <span>{link.label}</span>
+                <Icon name="externalLink" size={12} class="external" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <p class="footer-label text-xs text-accent">{content.disclaimerTitle}</p>
+      <p class="disclaimer-text text-sm text-muted text-relaxed">{content.disclaimerBody}</p>
+      <p class="disclaimer-text text-sm text-muted text-relaxed">{content.notAffiliated}</p>
+      <p class="copyright text-xs text-muted">© {year} {content.copyright}. {content.license}.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding-block: var(--space-12);
+    border-top: var(--border-default);
+    background: var(--color-section);
+  }
+
+  .footer-grid,
+  .footer-links {
+    display: grid;
+  }
+
+  .footer-grid {
+    gap: var(--space-10);
+  }
+
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .footer-grid > :nth-child(1) { grid-column: span 4; }
+    .footer-grid > :nth-child(2) { grid-column: span 3; }
+    .footer-grid > :nth-child(3) { grid-column: span 5; }
+  }
+
+  .tagline,
+  .disclaimer-text {
+    margin-top: var(--space-3);
+  }
+
+  .footer-label {
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    gap: var(--space-2-5);
+    margin-top: var(--space-4);
+  }
+
+  .section-link:hover {
+    color: var(--color-bronze);
+  }
+
+  .external {
+    opacity: 0.5;
+  }
+
+  .disclaimer {
+    margin-top: var(--space-10);
+    padding-top: var(--space-6);
+    border-top: var(--border-default);
+  }
+
+  .copyright {
+    margin-top: var(--space-4);
+  }
+</style>

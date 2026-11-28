@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Features from '../components/sections/Features.astro';
+import Screenshots from '../components/sections/Screenshots.astro';
+import Download from '../components/sections/Download.astro';
+import GettingStarted from '../components/sections/GettingStarted.astro';
+import Roadmap from '../components/sections/Roadmap.astro';
+import FAQ from '../components/sections/FAQ.astro';
+import Support from '../components/sections/Support.astro';
+import { loadSiteContent } from '../data/site-content';
+import { navigation } from '../data/navigation';
+import { getReleaseSnapshot } from '../data/github';
+import { classifyRelease } from '../data/releases';
+
+const [content, { snapshot }] = await Promise.all([loadSiteContent(), getReleaseSnapshot()]);
+const nav = navigation(content.nav);
+const latest = snapshot.release ? classifyRelease(snapshot.release) : null;
+const software = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: content.header.brandName,
+  description: content.meta.description,
+  url: new URL('/', Astro.site).href,
+  image: new URL(content.meta.socialImage.src, Astro.site).href,
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: content.download.platforms.map(({ name }) => name).join(', '),
+  offers: { '@type': 'Offer', price: 0 },
+  softwareVersion: latest?.tag,
+};
+const softwareJson = JSON.stringify(software).replaceAll('<', '\\u003c');
+---
+
+<BaseLayout meta={content.meta} skipToContent={content.skipToContent}>
+  <script slot="head" is:inline type="application/ld+json" set:html={softwareJson}></script>
+  <Header slot="header" content={content.header} links={nav.primary} />
+  <Hero content={content.hero} notice={content.notice} />
+  <Features content={content.features} />
+  <Screenshots content={content.screenshots} />
+  <Download content={content.download} latest={latest} />
+  <GettingStarted content={content.gettingStarted} />
+  <Roadmap content={content.roadmap} />
+  <FAQ content={content.faq} />
+  <Support content={content.support} />
+  <Footer slot="footer" content={content.footer} brandName={content.header.brandName} sections={nav.footer} />
+</BaseLayout>

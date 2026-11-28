@@ -1,0 +1,37 @@
+{
+  "tagline": "Your add-ons. Simplified.",
+  "disclaimerTitle": "Independent project disclaimer",
+  "disclaimerBody": "This is an independent presentation website for ESO Addons Manager. The application source code and releases are maintained by powerbq on GitHub.",
+  "notAffiliated": "This website is not affiliated with, endorsed by, or sponsored by ZeniMax Media Inc. or Bethesda Softworks. The Elder Scrolls Online and related trademarks belong to their respective owners.",
+  "sections": "Sections",
+  "resourcesTitle": "Resources",
+  "links": [
+    {
+      "label": "Application repository",
+      "url": "https://github.com/powerbq/eso-addons-manager",
+      "icon": "gitBranch"
+    },
+    {
+      "label": "Application releases",
+      "url": "https://github.com/powerbq/eso-addons-manager/releases",
+      "icon": "github"
+    },
+    {
+      "label": "Application issues",
+      "url": "https://github.com/powerbq/eso-addons-manager/issues",
+      "icon": "alertCircle"
+    },
+    {
+      "label": "Website repository",
+      "url": "https://github.com/eso-addons-manager/eso-addons-manager.github.io",
+      "icon": "globe"
+    },
+    {
+      "label": "Website issues",
+      "url": "https://github.com/eso-addons-manager/eso-addons-manager.github.io/issues",
+      "icon": "alertCircle"
+    }
+  ],
+  "license": "MIT License",
+  "copyright": "ESO Addons Manager website contributors"
+}

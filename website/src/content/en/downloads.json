@@ -1,0 +1,43 @@
+{
+  "title": "Download",
+  "subtitle": "The available installation packages depend on your operating system and architecture. Download files from the original GitHub Releases page.",
+  "fallbackLink": "Open releases on GitHub",
+  "releaseLink": "View this release on GitHub",
+  "checksumNote": "Verify published checksums when available before running the application.",
+  "latestVersion": "Latest version",
+  "publishedOn": "Published",
+  "noReleaseAvailable": "No release is currently available. Visit GitHub to check for releases.",
+  "noPackagesAvailable": "No packages are available for this platform in the latest release.",
+  "noCompatiblePackages": "No packages are available for the listed platforms in the latest release.",
+  "checksumsLabel": "Checksums",
+  "unclassifiedAssets": "Other files",
+  "packageLabels": {
+    "exe": "Installer (EXE)",
+    "zip": "Portable (ZIP)",
+    "dmg": "Disk Image (DMG)",
+    "appimage": "AppImage",
+    "deb": "Debian (DEB)",
+    "rpm": "RPM",
+    "pkgTarZst": "Arch (pkg.tar.zst)"
+  },
+  "platforms": [
+    {
+      "name": "Windows",
+      "detail": "AMD64",
+      "architecture": "AMD64",
+      "note": "AMD64 builds. Windows SmartScreen may display a warning because the application is unsigned."
+    },
+    {
+      "name": "macOS",
+      "detail": "Apple Silicon ARM64",
+      "architecture": "ARM64",
+      "note": "Apple Silicon ARM64 builds. Intel Mac support is not currently listed."
+    },
+    {
+      "name": "Linux",
+      "detail": "AMD64",
+      "architecture": "AMD64",
+      "note": "AMD64 builds. Select the package appropriate for your distribution."
+    }
+  ]
+}

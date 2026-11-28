@@ -1,0 +1,62 @@
+{
+  "title": "Frequently Asked Questions",
+  "subtitle": "Common questions about ESO Addons Manager.",
+  "items": [
+    {
+      "question": "What is ESO Addons Manager?",
+      "answer": "A desktop application for installing, updating, removing and managing add-ons for The Elder Scrolls Online."
+    },
+    {
+      "question": "Is ESO Addons Manager free?",
+      "answer": "Yes. The application source code and releases are publicly available on GitHub."
+    },
+    {
+      "question": "Which operating systems are supported?",
+      "answer": "Windows AMD64, macOS Apple Silicon ARM64 and Linux AMD64."
+    },
+    {
+      "question": "Are Intel Macs supported?",
+      "answer": "The currently supported macOS architecture is Apple Silicon ARM64. Intel Mac support is not currently listed."
+    },
+    {
+      "question": "What should I do if I already have installed add-ons?",
+      "answer": "Back up your AddOns folder, verify the selected directory, use Scan and review the detected add-ons before synchronizing."
+    },
+    {
+      "question": "Can the manager delete my existing add-ons?",
+      "answer": "Yes. Synchronization may delete files and add-ons that the manager does not manage. Always keep a backup and review your configuration before synchronizing."
+    },
+    {
+      "question": "Are dependencies installed automatically?",
+      "answer": "The manager supports automatic dependency resolution, but some dependencies may require a user selection."
+    },
+    {
+      "question": "Can I install custom ZIP add-ons?",
+      "answer": "Yes. The application supports custom ZIP add-ons."
+    },
+    {
+      "question": "Can I exclude add-ons from synchronization?",
+      "answer": "Yes. The application supports exclusions."
+    },
+    {
+      "question": "Does the manager support Tamriel Trade Centre?",
+      "answer": "TTC price tables can be updated during synchronization when the corresponding add-on is installed and the feature is applicable."
+    },
+    {
+      "question": "Why does Windows SmartScreen show a warning?",
+      "answer": "Windows may display a warning because the application is unsigned. Verify the download source and published checksums before running the application. An unsigned application is not automatically malicious, but its safety cannot be guaranteed solely by its availability on GitHub."
+    },
+    {
+      "question": "Does the manager update itself automatically?",
+      "answer": "The application can check for updates and direct users to the download page. This does not automatically install the new application version."
+    },
+    {
+      "question": "Can I import or export my installed add-ons?",
+      "answer": "Import and export functionality is planned and is not currently presented as an available feature."
+    },
+    {
+      "question": "Where can I report application bugs?",
+      "answer": "Report application-related issues in the original application repository on GitHub. Remove personal information from diagnostic logs before sharing them."
+    }
+  ]
+}

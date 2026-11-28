@@ -1,0 +1,269 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import PlatformHeading from './PlatformHeading.astro';
+import { APP_RELEASES_URL } from '../../data/links';
+import { formatDate, formatFileSize, type PackageKind, type Release } from '../../data/releases';
+import type { IconName } from '../../data/icons';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['download'];
+  latest: Release | null;
+}
+
+const { content, latest } = Astro.props;
+const platformKeys = { Windows: 'windows', macOS: 'macos', Linux: 'linux' } as const;
+const packageIcons: Record<PackageKind, IconName> = {
+  exe: 'download',
+  zip: 'fileArchive',
+  dmg: 'package',
+  appimage: 'package',
+  deb: 'package',
+  rpm: 'package',
+  'pkg.tar.zst': 'package',
+};
+const platforms = content.platforms.map((platform) => ({
+  platform,
+  packages: latest?.platforms.find((group) =>
+    group.platform === platformKeys[platform.name] && group.architecture === platform.architecture,
+  )?.packages ?? [],
+}));
+const hasPackages = platforms.some(({ packages }) => packages.length > 0);
+---
+
+<Section id="download">
+  <SectionHeading id="download-title" title={content.title} subtitle={content.subtitle} />
+
+  <ul class="card-grid card-grid--three-sm platform-notes" role="list">
+    {content.platforms.map((platform) => (
+      <li class="card">
+        <PlatformHeading platform={platform} warning />
+        <p class="platform-note text-sm text-muted text-relaxed">{platform.note}</p>
+      </li>
+    ))}
+  </ul>
+
+  {latest && (
+    <div class="latest">
+      <div class="card split release-header">
+        <div>
+          <p class="release-label text-xs text-muted">{content.latestVersion}</p>
+          <p class="release-version">{latest.tag}</p>
+          <p class="release-date text-sm text-muted">
+            {content.publishedOn} <time datetime={latest.publishedAt}>{formatDate(latest.publishedAt)}</time>
+          </p>
+        </div>
+        {hasPackages && (
+          <a class="icon-link text-sm text-accent" href={latest.url} target="_blank" rel="noopener noreferrer">
+            <Icon name="externalLink" />{content.releaseLink}
+          </a>
+        )}
+      </div>
+
+      {hasPackages && (
+        <div class="card-grid card-grid--three-sm">
+          {platforms.map(({ platform, packages }) => (
+            <div class="card">
+              <PlatformHeading platform={platform} />
+              {packages.length > 0 ? (
+                <ul class="package-list" role="list">
+                  {packages.map((item) => (
+                    <li>
+                      <a href={item.url} class="package-link text-sm" target="_blank" rel="noopener noreferrer">
+                        <span class="package-name">
+                          <Icon name={packageIcons[item.kind]} class="fixed-icon text-accent" />
+                          <span>{content.packageLabels[item.kind]}</span>
+                        </span>
+                        <span class="package-size text-xs text-muted">{formatFileSize(item.size)}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="platform-note text-sm text-muted">{content.noPackagesAvailable}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {latest.checksums.length > 0 && (
+        <div class="card more-files">
+          <div class="checksums-heading">
+            <Icon name="shieldCheck" size={20} class="text-accent" />
+            <p class="checksums-label text-sm">{content.checksumsLabel}</p>
+          </div>
+          <p class="checksum-note text-sm text-muted">{content.checksumNote}</p>
+          <ul class="file-links" role="list">
+            {latest.checksums.map((file) => (
+              <li>
+                <a class="icon-link text-sm text-accent" href={file.url} target="_blank" rel="noopener noreferrer">
+                  <Icon name="fileText" />{file.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {latest.otherFiles.length > 0 && (
+        <div class="card more-files">
+          <p class="checksums-label text-sm">{content.unclassifiedAssets}</p>
+          <ul class="file-links" role="list">
+            {latest.otherFiles.map((file) => (
+              <li>
+                <a class="icon-link text-sm text-muted" href={file.url} target="_blank" rel="noopener noreferrer">
+                  <Icon name="download" />{file.name}<span class="text-xs">({formatFileSize(file.size)})</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  {!hasPackages && (
+    <div class="card split">
+      <div class="release-info">
+        <Icon name="info" size={20} class="info-icon fixed-icon text-accent" />
+        <p class="text-sm">{latest ? content.noCompatiblePackages : content.noReleaseAvailable}</p>
+      </div>
+      <Button href={APP_RELEASES_URL} variant="primary" icon="externalLink" external>{content.fallbackLink}</Button>
+    </div>
+  )}
+</Section>
+
+<style>
+  .platform-notes,
+  .latest {
+    margin-bottom: var(--space-6);
+  }
+
+  .platform-note,
+  .package-list,
+  .more-files {
+    margin-top: var(--space-4);
+  }
+
+  .split {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .split :global(.btn) {
+    flex: none;
+  }
+
+  .release-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .release-label {
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .release-version,
+  .release-date {
+    margin-top: var(--space-1);
+  }
+
+  .release-version {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.75rem;
+  }
+
+  .package-list,
+  .file-links {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .package-list {
+    gap: var(--space-2-5);
+  }
+
+  .package-link,
+  .package-name {
+    display: flex;
+    align-items: center;
+  }
+
+  .package-link {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    row-gap: var(--space-2);
+    padding: var(--space-2-5) var(--space-3);
+    border: var(--border-default);
+    border-radius: var(--radius-md);
+    background: var(--color-section);
+    transition: border-color 150ms var(--ease-standard);
+  }
+
+  .package-link:hover {
+    border-color: color-mix(in srgb, var(--color-bronze) 50%, transparent);
+  }
+
+  .package-name {
+    min-width: 0;
+    gap: var(--space-2-5);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .package-name span {
+    overflow-wrap: anywhere;
+  }
+
+  .fixed-icon,
+  .package-size {
+    flex: none;
+  }
+
+  .checksums-heading,
+  .release-info {
+    display: flex;
+  }
+
+  .checksums-heading {
+    align-items: center;
+    gap: var(--space-2-5);
+  }
+
+  .checksums-label {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .checksum-note {
+    margin-top: var(--space-2);
+  }
+
+  .file-links {
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .release-info {
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .info-icon {
+    margin-top: var(--space-0-5);
+  }
+
+  @media (min-width: 640px) {
+    .split {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+</style>

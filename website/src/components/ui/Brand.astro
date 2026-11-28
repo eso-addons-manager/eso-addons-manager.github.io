@@ -1,0 +1,29 @@
+---
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="brand">
+  <img src="/brand/logo.svg" alt="" width="28" height="28" decoding="async" />
+  <span>{name}</span>
+</span>
+
+<style>
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2-5);
+    color: var(--color-text);
+    font-size: var(--brand-font-size, var(--font-size-sm));
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--brand-line-height, var(--line-height-sm));
+  }
+
+  img {
+    flex: none;
+    width: 28px;
+  }
+</style>

@@ -1,0 +1,18 @@
+{
+  "header": {
+    "brandName": "ESO Addons Manager",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "primaryLabel": "Primary"
+  },
+  "nav": {
+    "features": "Features",
+    "screenshots": "Screenshots",
+    "download": "Download",
+    "gettingStarted": "Getting Started",
+    "roadmap": "Roadmap",
+    "faq": "FAQ",
+    "support": "Support"
+  },
+  "skipToContent": "Skip to content"
+}

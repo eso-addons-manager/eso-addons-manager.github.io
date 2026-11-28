@@ -1,0 +1,36 @@
+---
+import Icon from '../ui/Icon.astro';
+import { platformIcons } from '../../data/icons';
+import type { Platform } from '../../data/types';
+
+interface Props {
+  platform: Platform;
+  warning?: boolean;
+}
+
+const { platform, warning } = Astro.props;
+---
+
+<div class:list={['platform-heading', { warning }]}>
+  <div class="icon-tile"><Icon name={platformIcons[platform.name]} size={20} /></div>
+  <div>
+    <p class="name">{platform.name}</p>
+    <p class="text-sm text-muted">{platform.detail}</p>
+  </div>
+</div>
+
+<style>
+  .platform-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .warning {
+    gap: var(--space-3-5);
+  }
+
+  .name {
+    font-weight: var(--font-weight-semibold);
+  }
+</style>

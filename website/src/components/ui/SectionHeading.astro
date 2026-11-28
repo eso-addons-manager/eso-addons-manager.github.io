@@ -1,0 +1,50 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  subtitle: string;
+}
+
+const { id, title, subtitle } = Astro.props;
+---
+
+<div class="heading">
+  <h2 id={id}>{title}</h2>
+  <p>{subtitle}</p>
+</div>
+
+<style>
+  .heading {
+    max-width: 42rem;
+    margin-bottom: var(--space-8);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+    line-height: 1.25;
+  }
+
+  p {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+  }
+
+  @media (min-width: 640px) {
+    h2 {
+      font-size: var(--font-size-3xl);
+      line-height: 2.25rem;
+    }
+
+    p {
+      font-size: var(--font-size-lg);
+      line-height: 1.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    h2 {
+      font-size: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['gettingStarted'];
+}
+
+const { content } = Astro.props;
+---
+
+<Section id="getting-started" toned>
+  <SectionHeading id="getting-started-title" title={content.title} subtitle={content.subtitle} />
+  <ol class="card-grid card-grid--three-lg" role="list">
+    {content.steps.map(({ title, icon, emphasis, Content }, index) => (
+      <li class:list={['card', { emphasized: emphasis }]}>
+        <div class="step-heading">
+          <span class="step-number text-sm" aria-hidden="true">{index + 1}</span>
+          <h3 class="text-base">{title}</h3>
+          <Icon
+            name={icon}
+            size={20}
+            class:list={['step-icon', emphasis ? 'text-accent' : 'text-muted']}
+          />
+        </div>
+        <div class="step-body text-sm text-muted text-relaxed"><Content /></div>
+      </li>
+    ))}
+  </ol>
+</Section>
+
+<style>
+  .emphasized {
+    border-color: color-mix(in srgb, var(--color-bronze) 30%, transparent);
+    background: color-mix(in srgb, var(--color-bronze) 4%, transparent);
+  }
+
+  .step-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .step-number {
+    display: inline-grid;
+    flex: none;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--color-bronze);
+    color: var(--color-background);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .step-icon {
+    flex: none;
+    margin-left: auto;
+  }
+
+  .step-body {
+    margin-top: var(--space-3);
+  }
+
+  .step-body > :global(* + *) {
+    margin-top: var(--space-2);
+  }
+
+  .step-body :global(ul),
+  .step-body :global(ol) {
+    padding-inline-start: var(--space-5);
+  }
+
+  .step-body :global(ul) {
+    list-style: disc;
+  }
+
+  .step-body :global(ol) {
+    list-style: decimal;
+  }
+
+  .step-body :global(a) {
+    color: var(--color-bronze);
+    text-decoration: underline;
+  }
+</style>

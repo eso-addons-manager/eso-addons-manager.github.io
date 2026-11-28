@@ -1,0 +1,104 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['support'];
+}
+
+const { content } = Astro.props;
+---
+
+<Section id="support" toned bordered={false}>
+  <SectionHeading id="support-title" title={content.title} subtitle={content.subtitle} />
+  <ul class="card-grid channels" role="list">
+    {content.channels.map((channel) => (
+      <li class="card channel">
+        <div class="support-heading">
+          <div class="icon-tile">
+            <Icon name={channel.icon} size={20} />
+          </div>
+          <h3 class="text-base">{channel.label}</h3>
+        </div>
+        <p class="channel-description text-sm text-muted text-relaxed">{channel.description}</p>
+        <Button href={channel.url} external icon="externalLink" class="support-link">{channel.linkLabel}</Button>
+      </li>
+    ))}
+  </ul>
+
+  <div class="card report-guide">
+    <div class="support-heading">
+      <Icon name="listChecks" size={20} class="text-accent" />
+      <h3 class="text-base">{content.reportGuideTitle}</h3>
+    </div>
+    <p class="report-intro text-sm text-muted">{content.reportGuideIntro}</p>
+    <ul class="bullet-list text-sm text-muted text-relaxed" role="list">
+      {content.reportGuideItems.map((item) => <li>{item}</li>)}
+    </ul>
+    <div class="privacy-warning">
+      <Icon name="shieldAlert" class="privacy-icon" />
+      <p class="text-sm text-relaxed">{content.privacyWarning}</p>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .channels {
+    margin-bottom: var(--space-8);
+  }
+
+  .channel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .support-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .channel-description,
+  .report-intro {
+    margin-top: var(--space-3);
+  }
+
+  .channel-description {
+    flex: 1;
+  }
+
+  .support-link {
+    align-self: flex-start;
+    margin-top: var(--space-4);
+  }
+
+  .report-guide {
+    max-width: 48rem;
+  }
+
+  .bullet-list {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  .privacy-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2-5);
+    margin-top: var(--space-5);
+    padding: var(--space-3-5);
+    border: 1px solid color-mix(in srgb, var(--color-warning) 30%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-warning) 6%, transparent);
+  }
+
+  .privacy-icon {
+    flex: none;
+    margin-top: var(--space-0-5);
+    color: var(--color-warning);
+  }
+</style>

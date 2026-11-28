@@ -1,0 +1,192 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import WarningNotice from './WarningNotice.astro';
+import { platformIcons } from '../../data/icons';
+import { getScreenshotPreview } from '../../data/screenshot-previews';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['hero'];
+  notice: SiteContent['notice'];
+}
+
+const { content, notice } = Astro.props;
+const { srcset } = await getScreenshotPreview(content.screenshot.src);
+---
+
+<section id="hero" aria-labelledby="hero-title" tabindex="-1">
+  <img class="section-art" src="/brand/hero-background.svg" alt="" decoding="async" />
+  <div class="container-page section-padding hero-content">
+    <div class="hero-grid">
+      <div class="animate-fade-in-up">
+        <p class="eyebrow">{content.eyebrow}</p>
+        <h1 id="hero-title">{content.title}</h1>
+        <p class="subtitle text-accent">{content.subtitle}</p>
+        <p class="description text-muted text-relaxed">{content.description}</p>
+
+        <div class="actions">
+          <Button href="/#download" variant="primary" icon="download">{content.viewDownloads}</Button>
+        </div>
+
+        <p class="platform-label text-xs text-muted">{content.platformLabel}</p>
+        <ul class="platforms text-sm" role="list">
+          {content.platforms.map((platform) => (
+            <li>
+              <Icon name={platformIcons[platform.name]} class="text-accent" />
+              <span class="platform-name">{platform.name}</span>
+              <span class="text-muted">{platform.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="preview animate-fade-in-up">
+        <figure>
+          <img
+            src={content.screenshot.src}
+            srcset={srcset}
+            sizes={srcset && '(min-width: 1280px) 566px, (min-width: 1024px) calc(50vw - 74px), (min-width: 640px) calc(100vw - 50px), calc(100vw - 42px)'}
+            alt={content.screenshot.alt}
+            width={content.screenshot.width}
+            height={content.screenshot.height}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <div class="warning animate-fade-in-up">
+      <WarningNotice content={notice} />
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    overflow: hidden;
+    border-bottom: var(--border-default);
+  }
+
+  .section-art {
+    opacity: 0.18;
+  }
+
+  .hero-content {
+    position: relative;
+  }
+
+  .hero-grid {
+    display: grid;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  h1 {
+    margin-top: var(--space-4);
+    font-size: var(--font-size-4xl);
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    margin-top: var(--space-3);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.75rem;
+  }
+
+  .description {
+    max-width: 36rem;
+    margin-top: var(--space-5);
+  }
+
+  .platforms {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    display: flex;
+    margin-top: var(--space-7);
+  }
+
+  .platform-label {
+    margin-top: var(--space-8);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .platforms {
+    gap: var(--space-2-5);
+    margin-top: var(--space-3);
+  }
+
+  .platforms li {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1-5) var(--space-3);
+    border: var(--border-default);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-card) 80%, transparent);
+  }
+
+  .platform-name {
+    font-weight: var(--font-weight-medium);
+  }
+
+  figure {
+    overflow: hidden;
+    border: var(--border-default);
+    border-radius: var(--radius-lg);
+    background: var(--color-card);
+    box-shadow: var(--shadow-2xl);
+  }
+
+  figure img {
+    width: 100%;
+  }
+
+  .warning {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 640px) {
+    h1 {
+      font-size: var(--font-size-5xl);
+      line-height: 1;
+    }
+
+    .subtitle {
+      font-size: var(--font-size-xl);
+    }
+
+    .description {
+      font-size: var(--font-size-lg);
+      line-height: 1.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-12);
+    }
+
+    h1 {
+      font-size: 3.25rem;
+    }
+
+    .preview {
+      padding-left: var(--space-4);
+    }
+
+    .warning {
+      margin-top: var(--space-10);
+    }
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['notice'];
+}
+
+const { content } = Astro.props;
+---
+
+<div class="notice" role="note" aria-labelledby="notice-title">
+  <Icon name="alertTriangle" size={20} class="notice-icon" />
+  <div>
+    <h2 id="notice-title" class="text-base">{content.title}</h2>
+    <p class="text-sm text-relaxed">{content.body}</p>
+    <ul class="bullet-list text-sm text-relaxed" role="list">
+      {content.bullets.map((bullet) => <li>{bullet}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .notice {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3-5);
+    padding: var(--space-5);
+    border: 1px solid color-mix(in srgb, var(--color-warning) 40%, transparent);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+  }
+
+  h2,
+  .notice-icon {
+    color: var(--color-warning);
+  }
+
+  .notice-icon {
+    flex: none;
+    margin-top: var(--space-0-5);
+  }
+
+  p {
+    margin-top: var(--space-2);
+  }
+
+  ul {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    --bullet-color: var(--color-warning);
+  }
+
+  @media (min-width: 640px) {
+    .notice {
+      padding: var(--space-6);
+    }
+  }
+</style>

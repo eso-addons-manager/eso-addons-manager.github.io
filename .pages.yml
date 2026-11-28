@@ -1,0 +1,401 @@
+media:
+  - name: screenshots
+    label: Screenshot files
+    input: website/public/screenshots
+    output: /screenshots
+    extensions: [avif, gif, jpeg, jpg, png, webp]
+    rename: safe
+  - name: brand
+    label: Brand images
+    input: website/public/brand
+    output: /brand
+    extensions: [avif, gif, jpeg, jpg, png, webp]
+    rename: safe
+
+components:
+  sectionTitle:
+    label: Section title
+    type: string
+    required: true
+  sectionIntro:
+    label: Section introduction
+    type: text
+    required: true
+  icon:
+    label: Icon
+    type: select
+    required: true
+    options:
+      values:
+        - alertCircle
+        - alertTriangle
+        - apple
+        - ban
+        - calendarClock
+        - chevronDown
+        - coins
+        - download
+        - externalLink
+        - fileArchive
+        - fileText
+        - folderCheck
+        - gitBranch
+        - github
+        - globe
+        - info
+        - library
+        - link
+        - listChecks
+        - maximize
+        - menu
+        - monitor
+        - package
+        - refresh
+        - rocket
+        - scanLine
+        - search
+        - settings
+        - shieldAlert
+        - shieldCheck
+        - star
+        - terminal
+        - x
+  httpsUrl:
+    label: Link URL
+    type: string
+    required: true
+    pattern:
+      regex: '^https://[^/\s?#@]+(?:[/?#]\S*)?$'
+      message: Enter an HTTPS URL without embedded credentials.
+  positiveInteger:
+    type: number
+    required: true
+    options: { min: 1, step: 1 }
+  screenshot:
+    label: Screenshot image
+    type: image
+    required: true
+    options: { media: screenshots }
+  altText:
+    label: Alternative text
+    description: Describe what the screenshot shows for readers who cannot see it.
+    type: string
+    required: true
+
+content:
+  - name: homepage
+    label: Homepage
+    type: file
+    path: website/src/content/en/homepage.json
+    format: json
+    fields:
+      - name: hero
+        label: Hero
+        type: object
+        required: true
+        fields:
+          - { name: eyebrow, label: Label above the heading, type: string, required: true }
+          - { name: title, label: Main heading, type: string, required: true }
+          - { name: subtitle, label: Tagline, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - { name: viewDownloads, label: Download button label, type: string, required: true }
+          - { name: platformLabel, label: Accessible platform list label, type: string, required: true }
+          - name: screenshot
+            label: Hero screenshot
+            description: Match the pixel dimensions to the selected image.
+            type: object
+            required: true
+            fields:
+              - { name: src, component: screenshot }
+              - { name: width, label: Width in pixels, component: positiveInteger }
+              - { name: height, label: Height in pixels, component: positiveInteger }
+              - { name: alt, component: altText }
+      - name: notice
+        label: AddOns folder notice
+        type: object
+        required: true
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: body, label: Message, type: text, required: true }
+          - { name: bullets, label: Checklist, type: string, required: true, list: { min: 1, collapsible: false } }
+
+  - name: navigation
+    label: Navigation
+    type: file
+    path: website/src/content/en/navigation.json
+    format: json
+    fields:
+      - name: header
+        label: Header
+        type: object
+        required: true
+        fields:
+          - { name: brandName, label: Site name, type: string, required: true }
+          - { name: primaryLabel, label: Accessible navigation label, type: string, required: true }
+          - { name: openMenu, label: Open menu button label, type: string, required: true }
+          - { name: closeMenu, label: Close menu button label, type: string, required: true }
+      - name: nav
+        label: Section link labels
+        description: These labels appear in the site navigation. Roadmap appears in the footer.
+        type: object
+        required: true
+        fields:
+          - { name: features, label: Features, type: string, required: true }
+          - { name: screenshots, label: Screenshots, type: string, required: true }
+          - { name: download, label: Download, type: string, required: true }
+          - { name: gettingStarted, label: Getting Started, type: string, required: true }
+          - { name: roadmap, label: Roadmap, type: string, required: true }
+          - { name: faq, label: FAQ, type: string, required: true }
+          - { name: support, label: Support, type: string, required: true }
+      - { name: skipToContent, label: Skip to content link label, type: string, required: true }
+
+  - name: features
+    label: Features
+    type: file
+    path: website/src/content/en/features.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - name: items
+        label: Feature cards
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - { name: icon, component: icon }
+
+  - name: screenshots
+    label: Screenshots
+    type: file
+    path: website/src/content/en/screenshots.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - { name: viewFullSize, label: Accessible full-size link label, type: string, required: true }
+      - name: items
+        label: Gallery
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: src, component: screenshot }
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Caption, type: text, required: true }
+          - { name: alt, component: altText }
+
+  - name: downloads
+    label: Downloads
+    type: file
+    path: website/src/content/en/downloads.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - name: platforms
+        label: Supported platforms
+        description: List each operating system once. These settings control which release files are shown.
+        type: object
+        required: true
+        list: { min: 1, max: 3, collapsible: true }
+        fields:
+          - name: name
+            label: Operating system
+            type: select
+            required: true
+            options: { values: [Windows, macOS, Linux] }
+          - name: architecture
+            label: Package architecture
+            type: select
+            required: true
+            options: { values: [AMD64, ARM64] }
+          - { name: detail, label: Architecture display label, type: string, required: true }
+          - { name: note, label: Installation note, type: text, required: true }
+      - { name: latestVersion, label: Latest version label, type: string, required: true }
+      - { name: publishedOn, label: Published date label, type: string, required: true }
+      - { name: releaseLink, label: Current release link label, type: string, required: true }
+      - { name: fallbackLink, label: All releases link label, type: string, required: true }
+      - { name: noReleaseAvailable, label: Missing release message, type: text, required: true }
+      - { name: noPackagesAvailable, label: Missing platform packages message, type: text, required: true }
+      - { name: noCompatiblePackages, label: No compatible packages message, type: text, required: true }
+      - { name: checksumsLabel, label: Checksums heading, type: string, required: true }
+      - { name: checksumNote, label: Checksum verification note, type: text, required: true }
+      - { name: unclassifiedAssets, label: Other files heading, type: string, required: true }
+      - name: packageLabels
+        label: Package format labels
+        type: object
+        required: true
+        fields:
+          - { name: exe, label: EXE, type: string, required: true }
+          - { name: zip, label: ZIP, type: string, required: true }
+          - { name: dmg, label: DMG, type: string, required: true }
+          - { name: appimage, label: AppImage, type: string, required: true }
+          - { name: deb, label: DEB, type: string, required: true }
+          - { name: rpm, label: RPM, type: string, required: true }
+          - { name: pkgTarZst, label: Arch (pkg.tar.zst), type: string, required: true }
+
+  - name: documentation
+    label: Documentation
+    type: group
+    items:
+      - name: getting-started
+        label: Getting Started heading
+        type: file
+        path: website/src/content/en/getting-started.json
+        format: json
+        fields:
+          - { name: title, component: sectionTitle }
+          - { name: subtitle, component: sectionIntro }
+      - name: setup-steps
+        label: Getting Started steps
+        type: collection
+        path: website/src/content/en/getting-started
+        format: yaml-frontmatter
+        filename: '{primary}.md'
+        subfolders: false
+        operations: { create: true, rename: false, delete: true }
+        view:
+          fields: [order, title]
+          primary: title
+          sort: [order, title]
+          default: { sort: order, order: asc }
+        fields:
+          - { name: title, label: Step title, type: string, required: true }
+          - name: order
+            label: Step order
+            description: Use a unique positive whole number. Smaller numbers appear first.
+            component: positiveInteger
+          - { name: icon, component: icon }
+          - name: emphasis
+            label: Highlight this step
+            type: boolean
+            default: false
+          - name: body
+            label: Instructions
+            description: Use Markdown with HTTPS links or page anchors. Give images alternative text.
+            type: rich-text
+            required: true
+            options: { format: markdown, media: screenshots }
+
+  - name: roadmap
+    label: Roadmap
+    type: file
+    path: website/src/content/en/roadmap.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - { name: plannedBadge, label: Planned badge label, type: string, required: true }
+      - name: items
+        label: Planned improvements
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - name: status
+            label: Status
+            type: select
+            required: true
+            default: planned
+            options: { values: [{ value: planned, label: Planned }] }
+
+  - name: faq
+    label: FAQ
+    type: file
+    path: website/src/content/en/faq.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - name: items
+        label: Questions and answers
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: question, label: Question, type: string, required: true }
+          - { name: answer, label: Answer, type: text, required: true }
+
+  - name: support
+    label: Support
+    type: file
+    path: website/src/content/en/support.json
+    format: json
+    fields:
+      - { name: title, component: sectionTitle }
+      - { name: subtitle, component: sectionIntro }
+      - name: channels
+        label: Support channels
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: label, label: Channel name, type: string, required: true }
+          - { name: description, label: Description, type: text, required: true }
+          - { name: linkLabel, label: Link label, type: string, required: true }
+          - { name: url, component: httpsUrl }
+          - { name: icon, component: icon }
+      - { name: reportGuideTitle, label: Report guide title, type: string, required: true }
+      - { name: reportGuideIntro, label: Report guide introduction, type: text, required: true }
+      - { name: reportGuideItems, label: Report checklist, type: string, required: true, list: { min: 1, collapsible: false } }
+      - { name: privacyWarning, label: Privacy warning, type: text, required: true }
+
+  - name: footer
+    label: Footer
+    type: file
+    path: website/src/content/en/footer.json
+    format: json
+    fields:
+      - { name: tagline, label: Site summary, type: text, required: true }
+      - { name: disclaimerTitle, label: Disclaimer title, type: string, required: true }
+      - { name: disclaimerBody, label: Disclaimer text, type: text, required: true }
+      - { name: notAffiliated, label: Non-affiliation notice, type: text, required: true }
+      - { name: sections, label: Section links heading, type: string, required: true }
+      - { name: resourcesTitle, label: Resources heading, type: string, required: true }
+      - name: links
+        label: Resource links
+        type: object
+        required: true
+        list: { min: 1, collapsible: true }
+        fields:
+          - { name: label, label: Link label, type: string, required: true }
+          - { name: url, component: httpsUrl }
+          - { name: icon, component: icon }
+      - { name: license, label: License notice, type: string, required: true }
+      - { name: copyright, label: Copyright notice, type: string, required: true }
+
+  - name: seo
+    label: SEO Settings
+    type: file
+    path: website/src/content/en/seo.json
+    format: json
+    fields:
+      - { name: title, label: Page title, type: string, required: true }
+      - { name: description, label: Meta description, type: text, required: true }
+      - { name: author, label: Author, type: string, required: true }
+      - name: socialTitle
+        label: Social sharing title
+        description: Leave blank to use the page title.
+        type: string
+      - name: socialDescription
+        label: Social sharing description
+        description: Leave blank to use the meta description.
+        type: text
+      - name: socialImage
+        label: Social sharing image
+        description: Match the pixel dimensions to the selected image.
+        type: object
+        required: true
+        fields:
+          - name: src
+            label: Image
+            type: image
+            required: true
+            options: { media: brand }
+          - { name: width, label: Width in pixels, component: positiveInteger }
+          - { name: height, label: Height in pixels, component: positiveInteger }

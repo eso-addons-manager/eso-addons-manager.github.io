@@ -1,0 +1,57 @@
+---
+import Navigation from './Navigation.astro';
+import Brand from '../ui/Brand.astro';
+import type { NavLink } from '../../data/navigation';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['header'];
+  links: NavLink[];
+}
+
+const { content, links } = Astro.props;
+---
+
+<header>
+  <div class="container-page header-content">
+    <a href="/#hero"><Brand name={content.brandName} /></a>
+    <Navigation links={links} label={content.primaryLabel} openMenu={content.openMenu} closeMenu={content.closeMenu} />
+  </div>
+</header>
+
+<style>
+  header {
+    container: site-header / inline-size;
+    position: sticky;
+    z-index: var(--z-header);
+    top: 0;
+    border-bottom: var(--border-default);
+    background: color-mix(in srgb, var(--color-background) 95%, transparent);
+  }
+
+  @supports (backdrop-filter: blur(8px)) {
+    header {
+      background: color-mix(in srgb, var(--color-background) 80%, transparent);
+      backdrop-filter: blur(8px);
+    }
+  }
+
+  .header-content,
+  .header-content > a {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-content {
+    justify-content: space-between;
+    gap: var(--space-4);
+    height: var(--header-height);
+  }
+
+  @media (min-width: 640px) {
+    .header-content {
+      --brand-font-size: var(--font-size-base);
+      --brand-line-height: 1.5rem;
+    }
+  }
+</style>

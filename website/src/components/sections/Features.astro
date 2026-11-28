@@ -1,0 +1,45 @@
+---
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Icon from '../ui/Icon.astro';
+import type { SiteContent } from '../../data/types';
+
+interface Props {
+  content: SiteContent['features'];
+}
+
+const { content } = Astro.props;
+---
+
+<Section id="features">
+  <SectionHeading id="features-title" title={content.title} subtitle={content.subtitle} />
+  <ul class="card-grid card-grid--three-lg" role="list">
+    {content.items.map((item) => (
+      <li class="card card-hover">
+        <div class="icon-tile"><Icon name={item.icon} size={20} /></div>
+        <h3>{item.title}</h3>
+        <p class="text-sm text-muted text-relaxed">{item.description}</p>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .icon-tile {
+    margin-bottom: var(--space-4);
+  }
+
+  h3 {
+    font-size: 0.95rem;
+    line-height: 1.375;
+  }
+
+  p {
+    margin-top: var(--space-2);
+  }
+</style>

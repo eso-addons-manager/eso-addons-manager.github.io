@@ -1,0 +1,35 @@
+---
+import type { SectionId } from '../../data/navigation';
+
+interface Props {
+  id: SectionId;
+  toned?: boolean;
+  bordered?: boolean;
+  class?: string;
+}
+
+const { id, toned = false, bordered = true, class: className, ...attributes } = Astro.props;
+---
+
+<section
+  {...attributes}
+  id={id}
+  aria-labelledby={`${id}-title`}
+  tabindex="-1"
+  class:list={['section-padding', { toned, bordered }, className]}
+>
+  <slot name="background" />
+  <div class="container-page">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .toned {
+    background: var(--color-section);
+  }
+
+  .bordered {
+    border-bottom: var(--border-default);
+  }
+</style>

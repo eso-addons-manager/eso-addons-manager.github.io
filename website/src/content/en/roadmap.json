@@ -1,0 +1,12 @@
+{
+  "title": "Roadmap",
+  "subtitle": "Planned features for future releases. No release dates are announced.",
+  "plannedBadge": "Planned",
+  "items": [
+    {
+      "title": "Import and export of installed add-ons",
+      "description": "Import and export functionality for installed add-ons is planned. It is not currently available and no release date has been announced.",
+      "status": "planned"
+    }
+  ]
+}

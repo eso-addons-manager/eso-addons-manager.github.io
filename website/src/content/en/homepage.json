@@ -1,0 +1,25 @@
+{
+  "hero": {
+    "eyebrow": "THE ELDER SCROLLS ONLINE",
+    "title": "ESO Addons Manager",
+    "subtitle": "Your add-ons. Simplified.",
+    "description": "Install, update and organize your The Elder Scrolls Online add-ons and libraries from a single desktop application. Manage dependencies, scan existing add-ons and keep your setup synchronized.",
+    "viewDownloads": "View downloads",
+    "platformLabel": "Available for",
+    "screenshot": {
+      "src": "/screenshots/main-interface.webp",
+      "alt": "ESO Addons Manager catalogue with add-on filters, detailed description and image previews",
+      "width": 1919,
+      "height": 1040
+    }
+  },
+  "notice": {
+    "title": "Important notice before first use",
+    "body": "Before using ESO Addons Manager for the first time, back up your AddOns folder and verify that the selected folder is correct. Synchronization may delete files and add-ons that the manager does not manage.",
+    "bullets": [
+      "Create a backup of your AddOns folder before your first synchronization.",
+      "Use Scan to discover existing add-ons and review the results before synchronizing.",
+      "Keep synchronization on launch disabled until your initial setup is complete and verified."
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+# Activation template for .github/workflows/deploy.yml after production approval.
+name: Deploy website to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions: {}
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    uses: ./.github/workflows/astro.yml
+    with:
+      publish: true
+    permissions:
+      contents: read
+      pages: write
+      id-token: write

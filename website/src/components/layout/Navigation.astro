@@ -1,0 +1,185 @@
+---
+import Icon from '../ui/Icon.astro';
+import NavigationLinks from './NavigationLinks.astro';
+import type { NavLink } from '../../data/navigation';
+
+interface Props {
+  links: NavLink[];
+  label: string;
+  openMenu: string;
+  closeMenu: string;
+}
+
+const { links, label, openMenu, closeMenu } = Astro.props;
+---
+
+<nav aria-label={label} data-primary-navigation>
+  <ul class="desktop-links" role="list">
+    <NavigationLinks links={links} />
+  </ul>
+  <details class="mobile-navigation">
+    <summary aria-controls="mobile-menu">
+      <span class="menu-open"><Icon name="menu" size={24} /><span class="screen-reader">{openMenu}</span></span>
+      <span class="menu-close"><Icon name="x" size={24} /><span class="screen-reader">{closeMenu}</span></span>
+    </summary>
+    <div id="mobile-menu">
+      <ul class="container-page" role="list">
+        <NavigationLinks links={links} />
+      </ul>
+    </div>
+  </details>
+</nav>
+
+<script>
+  const navigation = document.querySelector('[data-primary-navigation]');
+  const menu = navigation?.querySelector('details');
+  const summary = menu?.querySelector('summary');
+  const desktop = navigation?.querySelector('.desktop-links');
+
+  if (navigation && menu && summary && desktop) {
+    let lastNavFocus: HTMLElement | null = null;
+    let desktopVisible = desktop.getClientRects().length > 0;
+
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        event.preventDefault();
+        menu.open = false;
+        summary.focus();
+      }
+    });
+
+    menu.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a')) menu.open = false;
+    });
+
+    document.addEventListener('focusin', (event) => {
+      lastNavFocus = event.target instanceof HTMLElement && navigation.contains(event.target) ? event.target : null;
+      if (menu.open && !menu.contains(lastNavFocus)) menu.open = false;
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (menu.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+    });
+
+    new ResizeObserver(() => {
+      const visible = desktop.getClientRects().length > 0;
+      if (visible === desktopVisible) return;
+      desktopVisible = visible;
+
+      if (visible) {
+        if (menu.contains(lastNavFocus) && document.hasFocus()) {
+          const links = [...desktop.querySelectorAll<HTMLAnchorElement>('[data-section-link]')];
+          const matchingLink = links.find((link) => link.dataset.sectionLink === lastNavFocus?.dataset.sectionLink);
+          (matchingLink ?? links[0])?.focus({ preventScroll: true });
+        }
+        menu.open = false;
+      } else if (desktop.contains(lastNavFocus) && document.hasFocus()) {
+        summary.focus({ preventScroll: true });
+      }
+    }).observe(desktop);
+  }
+
+  if (navigation && 'IntersectionObserver' in window) {
+    const links = [...navigation.querySelectorAll<HTMLAnchorElement>('[data-section-link]')];
+    const sections = [...document.querySelectorAll('main > section[id]')];
+    let observer: IntersectionObserver | undefined;
+
+    const observeSections = () => {
+      observer?.disconnect();
+      const height = document.documentElement.clientHeight;
+      const readingLine = Math.floor(height * 0.425);
+      const intersecting = new Set<Element>();
+
+      observer = new IntersectionObserver((entries) => {
+        for (const { target, isIntersecting } of entries) {
+          if (isIntersecting) intersecting.add(target);
+          else intersecting.delete(target);
+        }
+        const current = sections.find((section) => intersecting.has(section));
+        for (const link of links) {
+          if (link.dataset.sectionLink === current?.id) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        }
+      }, { rootMargin: `-${readingLine}px 0px -${height - readingLine - 1}px 0px` });
+      for (const section of sections) observer.observe(section);
+    };
+
+    if (sections.length > 0) {
+      observeSections();
+      window.addEventListener('resize', observeSections);
+    }
+  }
+</script>
+
+<style>
+  .desktop-links {
+    display: none;
+    align-items: center;
+    gap: var(--space-0-5);
+  }
+
+  summary {
+    display: flex;
+    width: fit-content;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    list-style: none;
+    cursor: pointer;
+    transition: color var(--duration-hover) var(--ease-standard);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover {
+    color: var(--color-bronze);
+  }
+
+  .screen-reader {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .menu-close,
+  details[open] .menu-open {
+    display: none;
+  }
+
+  details[open] .menu-close {
+    display: block;
+  }
+
+  #mobile-menu {
+    position: absolute;
+    z-index: var(--z-overlay);
+    top: 100%;
+    inset-inline: 0;
+    max-height: calc(100dvh - var(--header-height) - 1px);
+    overflow-y: auto;
+    border-bottom: var(--border-default);
+    background: var(--color-section);
+    box-shadow: var(--shadow-lg);
+    --nav-link-padding: var(--space-3);
+    --nav-link-font-size: var(--font-size-base);
+    --nav-link-line-height: 1.5rem;
+  }
+
+  #mobile-menu ul {
+    padding-block: var(--space-3);
+  }
+
+  @container site-header (min-width: 64rem) {
+    .desktop-links {
+      display: flex;
+    }
+
+    .mobile-navigation {
+      display: none;
+    }
+  }
+</style>

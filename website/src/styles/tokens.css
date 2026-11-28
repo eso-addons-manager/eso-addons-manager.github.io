@@ -1,0 +1,76 @@
+:root {
+  --color-background: #111317;
+  --color-section: #171a20;
+  --color-card: #1e2229;
+  --color-border: #303640;
+  --color-text: #f1f3f5;
+  --color-text-muted: #a4abb6;
+  --color-bronze: #c5a36b;
+  --color-bronze-hover: #d4b57d;
+  --color-bronze-muted: #a88a55;
+  --color-success: #4cb782;
+  --color-warning: #e5b45e;
+  --color-error: #e57373;
+
+  --font-family-sans: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --line-height-xs: 1rem;
+  --line-height-sm: 1.25rem;
+  --line-height-body: 1.5;
+  --line-height-heading: 1.15;
+  --line-height-relaxed: 1.625;
+  --letter-spacing-heading: -0.01em;
+  --letter-spacing-eyebrow: 0.18em;
+
+  --space-0-5: 0.125rem;
+  --space-1: 0.25rem;
+  --space-1-5: 0.375rem;
+  --space-2: 0.5rem;
+  --space-2-5: 0.625rem;
+  --space-3: 0.75rem;
+  --space-3-5: 0.875rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --container-width: 1280px;
+  --header-height: 3.5rem;
+
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --border-default: 1px solid var(--color-border);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --focus-ring: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-bronze);
+
+  --duration-hover: 200ms;
+  --duration-gallery: 300ms;
+  --duration-entrance: 400ms;
+  --duration-reduced-motion: 0.01ms;
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: ease-out;
+
+  --z-header: 40;
+  --z-overlay: 50;
+}
+
+/* Layout breakpoints used in media queries: 640px, 768px and 1024px. */
